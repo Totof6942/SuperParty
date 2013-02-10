@@ -1,4 +1,4 @@
-{% extends "layout.html.twig" %}
+{% extends "layout.html" %}
 
 {% block content %}
 
@@ -13,12 +13,13 @@
     <div class="row">
         <div class="span6">
             <h2>Soirées à venir</h2>
+            
             <ul>
-                <li><a href="#">Soirée infirmières</a> - <em>le 14/02/2013</em></li>
-                <li><a href="#">Soirée infirmières</a> - <em>le 14/02/2013</em></li>
-                <li><a href="#">Soirée infirmières</a> - <em>le 14/02/2013</em></li>
-                <li><a href="#">Soirée infirmières</a> - <em>le 14/02/2013</em></li>
-                <li><a href="#">Soirée infirmières</a> - <em>le 14/02/2013</em></li>
+                {% for party in parties %}
+                    <li>{{ party.name }}</li>
+                {% else %}
+                    <li>Pas de soirée à venir.</li>
+                {% endfor %}
             </ul>
 
             <p><a class="btn" href="#">Voir toutes les soirées »</a></p>
