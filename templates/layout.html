@@ -35,6 +35,7 @@
 
     <body>
 
+        {% set active = active|default(null) %}
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -46,25 +47,26 @@
                     <a class="brand" href="{{ path('homepage') }}">SuperParty</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="{{ path('homepage') }}">{{ 'Homepage'|trans }}</a></li>
-                            <li><a href="{{ path('locations') }}">{{ 'Locations'|trans }}</a></li>
-                            <li><a href="{{ path('parties') }}">{{ 'Parties'|trans }}</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li class="nav-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
+                            <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}">{{ 'Homepage'|trans }}</a></li>
+                            <li {% if 'locations' == active %}class="active"{% endif %}><a href="{{ path('locations') }}">{{ 'Locations'|trans }}</a></li>
+                            <li {% if 'parties' == active %}class="active"{% endif %}><a href="{{ path('parties') }}">{{ 'Parties'|trans }}</a></li>
                         </ul>
 
                         <ul class="nav pull-right">
-                            <li><a href="{{ path('login') }}">{{ 'Login'|trans }}</a></li>
+                            {% if app.session.get('user') %}
+                                <li class="dropdown {% if 'connexion' == active %}active{% endif %}">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'Administration'|trans }} <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#"><i class="icon-globe"></i> {{ 'Locations manager'|trans }}</a></li>
+                                        <li><a href="#"><i class="icon-glass"></i> {{ 'Parties manager'|trans }}</a></li>
+                                        <li><a href="#"><i class="icon-comment"></i> {{ 'Comments manager'|trans }}</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('logout') }}"><i class="icon-off"></i> {{ 'Logout'|trans }}</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li {% if 'connexion' == active %}class="active"{% endif %}><a href="{{ path('login') }}">{{ 'Login'|trans }}</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -96,6 +98,7 @@
         <!-- Le javascript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="./js/jquery.js"></script>
+        <script src="{{ app.request.basepath }}/js/jquery.js"></script>
+        <script src="{{ app.request.basepath }}/js/bootstrap-dropdown.js"></script>
     </body>
 </html>
