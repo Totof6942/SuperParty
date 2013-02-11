@@ -10,7 +10,12 @@ class LocationController
 
     public function indexAction(Request $request, Application $app)
     {
-    	echo 'toto';
+        return $app['twig']->render('locations.html', array());
     }
 
+    public function locationByIdAction(Request $request, Application $app) 
+    {
+        return $app['twig']->render('location.html', array());
+    }
+    
 }
