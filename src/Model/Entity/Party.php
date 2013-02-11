@@ -4,53 +4,93 @@ namespace Model\Entity;
 
 class Party
 {
-	private $id;
 
-	private $name;
+    /**
+     * @var iny
+     */
+    private $id;
 
-	private $date;
+    /**
+     * @var string
+     */
+    private $name;
 
-	private $message;
+    /**
+     * @var DateTime
+     */
+    private $date;
 
-	public function __construct($name, \DateTime $date, $message)
-	{
-		$this->setName($name);
-		$this->setDate($date);
-		$this->setMessage($message);
-	}
+    /**
+     * @var string
+     */
+    private $message;
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @param string   $name
+     * @param DateTime $date
+     * @param string   $message
+     */
+    public function __construct($name, \DateTime $date, $message=null)
+    {
+        $this->setName($name);
+        $this->setDate($date);
+        $this->setMessage($message);
+    }
 
-	public function setName($name)
-	{
-		$this->name = $name;
-	}
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
-	public function setDate(\DateTime $ddate)
-	{
-		$this->date = $date;
-	}
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	public function getDate()
-	{
-		return $this->date;
-	}
+    /**
+     * @param DateTime $date
+     */
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
+    }
 
-	public function setMessage($message)
-	{
-		$this->message = $message;
-	}
+    /**
+     * @return DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 
-	public function getMessage()
-	{
-		return $this->message;
-	}
+    /**
+     * @param string $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
 }

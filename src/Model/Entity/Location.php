@@ -4,92 +4,162 @@ namespace Model\Entity;
 
 class Location
 {
-	private $id;
 
-	private $name;
+    /**
+     * @var int
+     */
+    private $id;
 
-	private $adress;
+    /**
+     * @var string
+     */
+    private $name;
 
-	private $zipCode;
+    /**
+     * @var string
+     */
+    private $adress;
 
-	private $city;
+    /**
+     * @var int
+     */
+    private $zipCode;
 
-	private $phone;
+    /**
+     * @var string
+     */
+    private $city;
 
-	private $description;
+    /**
+     * @var string
+     */
+    private $phone;
 
-	public function __construct($name, $adress, $zipCode, $city, $phone, $description)
-	{
-		$this->setName($name);
-		$this->setAdress($adress);
-		$this->setZipCode($zipCode);
-		$this->setCity($city);
-		$this->setPhone($phone);
-		$this->setDescription($description);
-	}
+    /**
+     * @var string
+     */
+    private $description;
 
-	public function getId() 
-	{
-		return $this->id;
-	}
+    /**
+     * @param int    $name
+     * @param srting $adress
+     * @param int    $zipCode
+     * @param srting $city
+     * @param srting $phone
+     * @param srting $description
+     */
+    public function __construct($name, $adress, $zipCode, $city, $phone=null, $description=null)
+    {
+        $this->setName($name);
+        $this->setAdress($adress);
+        $this->setZipCode($zipCode);
+        $this->setCity($city);
+        $this->setPhone($phone);
+        $this->setDescription($description);
+    }
 
-	public function setName($name) 
-	{
-		$this->name = $name;
-	}
+    /**
+     * @return int
+     */
+    public function getId() 
+    {
+        return $this->id;
+    }
 
-	public function getName() 
-	{
-		return $this->name;
-	}
+    /**
+     * @param string $username
+     */
+    public function setName($name) 
+    {
+        $this->name = $name;
+    }
 
-	public function setAdress($adress) 
-	{
-		$this->adress = $adress;
-	}
+    /**
+     * @return string
+     */
+    public function getName() 
+    {
+        return $this->name;
+    }
 
-	public function getAdress() 
-	{
-		return $this->adress;
-	}
+    /**
+     * @param string $adress
+     */
+    public function setAdress($adress) 
+    {
+        $this->adress = $adress;
+    }
 
-	public function setZipCode($zipCode)
-	{
-		$this->zipCode = $zipCode;
-	}
+    /**
+     * @return string
+     */
+    public function getAdress() 
+    {
+        return $this->adress;
+    }
 
-	public function getZipCode()
-	{
-		return $this->zipCode;
-	}
+    /**
+     * @param string $zipCode
+     */
+    public function setZipCode($zipCode)
+    {
+        $this->zipCode = $zipCode;
+    }
 
-	public function setCity($city)
-	{
-		$this->city = $city;
-	}
+    /**
+     * @return string
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
 
-	public function getCity()
-	{
-		return $this->city;
-	}
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
 
-	public function setPhone($phone)
-	{
-		$this->phone = $phone;
-	}
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 
-	public function getPhone()
-	{
-		return $this->phone;
-	}
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
 
-	public function setDescription($description)
-	{
-		$this->description = $description;
-	}
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
 
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
 }

@@ -4,53 +4,94 @@ namespace Model\Entity;
 
 class Comment
 {
-	private $id;
 
-	private $username;
+    /**
+     * @var int
+     */
+    private $id;
 
-	private $body;
+    /**
+     * @var string
+     */
+    private $username;
 
-	private $createdAt;
+    /**
+     * @var string
+     */
+    private $body;
 
-	public function _construct($username, $body, \DateTime $createdAt)
-	{
-		$this->setUsername($username);
-		$this->setBody($body);
-		$this->setCreatedAt($createdAt);
-	}
+    /**
+     * @var DateTime
+     */
+    private $created_at;
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @param string   $username
+     * @param string   $body
+     * @param DateTime $created_at
+     */
+    public function _construct($username, $body, \DateTime $created_at=null)
+    {
+        $this->setUsername($username);
+        $this->setBody($body);
+        
+        $created_at = (empty($created_at)) ? $this->created_at = new \DateTime() : $created_at;
+    }
 
-	public function setUsername($username)
-	{
-		$this->username = $username;
-	}
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function getUsername()
-	{
-		return $this->username;
-	}
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
 
-	public function setBody($body)
-	{
-		$this->body = $body;
-	}
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-	public function getBody()
-	{
-		return $this->body;
-	}
+    /**
+     * @param string $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
 
-	public function setCreatedAt(\DateTime $createdAt)
-	{
-		$this->createdAt = $createdAt;
-	}
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
 
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
+    /**
+     * @param DateTime $created_at
+     */
+    public function setCreatedAt(\DateTime $created_at)
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
 }
