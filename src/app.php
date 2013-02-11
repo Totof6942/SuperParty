@@ -22,7 +22,8 @@ $app->register(new ServiceControllerServiceProvider());
 $app->register(new DoctrineServiceProvider());
 
 $app->register(new TwigServiceProvider(), array(
-    'twig.path'    => array(__DIR__.'/../templates'),
+    'twig.form.templates' => array('form_div_layout.html.twig', 'common/form_div_layout.html'),
+    'twig.path'           => array(__DIR__.'/../templates'),
     // 'twig.options' => array('cache' => __DIR__.'/../cache/twig'),
 ));
 

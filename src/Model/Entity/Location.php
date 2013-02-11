@@ -23,7 +23,7 @@ class Location
     /**
      * @var int
      */
-    private $zipCode;
+    private $zip_code;
 
     /**
      * @var string
@@ -43,20 +43,20 @@ class Location
     /**
      * @param int    $name
      * @param srting $adress
-     * @param int    $zipCode
+     * @param int    $zip_code
      * @param srting $city
      * @param srting $phone
      * @param srting $description
      */
-    public function __construct($name, $adress, $zipCode, $city, $phone=null, $description=null)
+    /*public function __construct($name, $adress, $zip_code, $city, $phone=null, $description=null)
     {
         $this->setName($name);
         $this->setAdress($adress);
-        $this->setZipCode($zipCode);
+        $this->setzip_code($zip_code);
         $this->setCity($city);
         $this->setPhone($phone);
         $this->setDescription($description);
-    }
+    }*/
 
     /**
      * @return int
@@ -67,7 +67,7 @@ class Location
     }
 
     /**
-     * @param string $username
+     * @param string $name
      */
     public function setName($name) 
     {
@@ -99,11 +99,11 @@ class Location
     }
 
     /**
-     * @param string $zipCode
+     * @param string $zip_code
      */
-    public function setZipCode($zipCode)
+    public function setZipCode($zip_code)
     {
-        $this->zipCode = $zipCode;
+        $this->zip_code = $zip_code;
     }
 
     /**
@@ -111,7 +111,7 @@ class Location
      */
     public function getZipCode()
     {
-        return $this->zipCode;
+        return $this->zip_code;
     }
 
     /**

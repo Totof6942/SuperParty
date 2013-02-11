@@ -9,28 +9,39 @@ use Symfony\Component\Form\FormError;
 
 /* Home page */
 $app->get('/', controller('home/index'))
-->bind('homepage');
+->bind('homepage')
+;
 
 /* Login */
 $app->match('/login', controller('connection/login'))
-->bind('login');
+->bind('login')
+;
 
 /* Logout */
 $app->match('/logout', controller('connection/logout'))
-->bind('logout');
+->bind('logout')
+;
 
 /* All Locations */
 $app->get('/locations', controller('location/index'))
-->bind('locations');
+->bind('locations')
+;
 
 /* One location */
-$app->get('/locations/{id}', controller('location/locationByIdAction'))
+$app->get('/locations/{id}', controller('location/getById'))
 ->assert('id', '\d+')
-->bind('location');
+->bind('location')
+;
+
+/* Add a location */
+$app->post('/locations', controller('location/post'))
+->bind('location')
+;
 
 /* All parties */
 $app->get('/parties', controller('party/parties'))
-->bind('parties');
+->bind('parties')
+;
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
