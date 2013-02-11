@@ -33,5 +33,11 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
     return $translator;
 }));
 
+function controller($shortName)
+{
+    list($shortClass, $shortMethod) = explode('/', $shortName, 2);
+
+    return sprintf('Controller\%sController::%sAction', ucfirst($shortClass), $shortMethod);
+}
 
 return $app;

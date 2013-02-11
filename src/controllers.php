@@ -82,11 +82,11 @@ $app->match('/logout', function() use ($app) {
 /**
  * All locations
  */
-$app->get('/locations', function() use($app) {
-    return $app['twig']->render('locations.html', array());
-})
-->bind('locations')
-;
+// $app->get('/locations', function() use($app) {
+//     return $app['twig']->render('locations.html', array());
+// })
+// ->bind('locations')
+// ;
 
 /**
  * One location
@@ -107,6 +107,8 @@ $app->get('/parties', function() use($app) {
 ->bind('parties')
 ;
 
+$app->get('/locations', controller('location/index'));
+
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
@@ -116,3 +118,4 @@ $app->error(function (\Exception $e, $code) use ($app) {
 
     return new Response($app['twig']->render($page, array('code' => $code)), $code);
 });
+
