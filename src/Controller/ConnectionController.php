@@ -27,35 +27,36 @@ class ConnectionController
         ))
         ->getForm();
 
-	    if ('POST' === $app['request']->getMethod()) {
-	        $form->bindRequest($app['request']);
+        if ('POST' === $app['request']->getMethod()) {
+            $form->bindRequest($app['request']);
 
-	        if ($form->isValid()) {
+            if ($form->isValid()) {
 
-	            $email    = $form->get('email')->getData();
-	            $password = $form->get('password')->getData();
+                $email    = $form->get('email')->getData();
+                $password = $form->get('password')->getData();
 
-	            if ('email@example.com' == $email && 'password' == $password) {
-	                $app['session']->set('user', array(
-	                    'email' => $email,
-	                ));
+                if ('email@example.com' == $email && 'password' == $password) {
+                    $app['session']->set('user', array(
+                        'email' => $email,
+                    ));
 
-	                $app['session']->setFlash('notice', 'You are now connected');
+                    $app['session']->setFlash('notice', 'You are now connected');
 
-	                return $app->redirect($app['url_generator']->generate('homepage'));
-	            }
+                    return $app->redirect($app['url_generator']->generate('homepage'));
+                }
 
-	            $form->addError(new FormError('Email / password does not match (email@example.com / password)'));
-	        }
-	    }
+                $form->addError(new FormError('Email / password does not match (email@example.com / password)'));
+            }
+        }
 
-	    return $app['twig']->render('login.html', array('form' => $form->createView()));
+        return $app['twig']->render('login.html', array('form' => $form->createView()));
     }
 
-    public function logoutAction(Request $request, Application $app) {
-    	$app['session']->clear();
+    public function logoutAction(Request $request, Application $app)
+    {
+        $app['session']->clear();
 
-    	return $app->redirect($app['url_generator']->generate('homepage'));
+        return $app->redirect($app['url_generator']->generate('homepage'));
     }
 
 }

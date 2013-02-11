@@ -17,5 +17,5 @@ class LocationController
     {
         return $app['twig']->render('location.html', array());
     }
-    
+
 }
