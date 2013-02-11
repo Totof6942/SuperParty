@@ -53,17 +53,16 @@ class LocationFinder implements FinderInterface
      */
     public function findOneById($id)
     {
-        $sth = $this->con->prepare("SELECT * FROM locations WHERE id = :id");
-        $sth->bindValue(':id', $id);
-        $sth->execute();
-        $cur = $sth->fetch(\PDO::FETCH_ASSOC);
+        $cur = $this->con->fetchAssoc("SELECT * FROM locations WHERE id = :id", array('id' => $id));
 
-        if (!empty($cur)) {
+        debug($cur);
+
+/*        if (!empty($cur)) {
             return $this->hydrate($cur);
         }
 
         return null;
-    }
+*/    }
 
     /**
      * Create a Location

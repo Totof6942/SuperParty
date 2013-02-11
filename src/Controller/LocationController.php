@@ -6,6 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 use Model\Entity\Location;
+use Model\Finder\LocationFinder;
 
 class LocationController 
 {
@@ -34,7 +35,7 @@ class LocationController
      */
     public function getByIdAction(Request $request, Application $app, $id) 
     {
-
+        (new LocationFinder($app['db']))->findOneById($id);
         return $app['twig']->render('location.html', array());
     }
 
@@ -46,7 +47,33 @@ class LocationController
      */
     public function postAction(Request $request, Application $app) 
     {
-        debug('passe');
+        
+        return $app['twig']->render('location.html', array());
+    }
+
+    /**
+     * Update a Location
+     * 
+     * @param Request     $request
+     * @param Application $app
+     * @param int         $id 
+     */
+    public function updateAction(Request $request, Application $app, $id) 
+    {
+        
+        return $app['twig']->render('location.html', array());
+    }
+
+    /**
+     * Delete a Location
+     * 
+     * @param Request     $request
+     * @param Application $app
+     * @param int         $id 
+     */
+    public function deleteAction(Request $request, Application $app, $id) 
+    {
+
         return $app['twig']->render('location.html', array());
     }
 

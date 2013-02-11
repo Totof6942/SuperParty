@@ -24,18 +24,30 @@ $app->match('/logout', controller('connection/logout'))
 
 /* All Locations */
 $app->get('/locations', controller('location/index'))
-->bind('locations')
+->bind('locations_get')
 ;
 
 /* One location */
 $app->get('/locations/{id}', controller('location/getById'))
 ->assert('id', '\d+')
-->bind('location')
+->bind('location_get')
 ;
 
 /* Add a location */
 $app->post('/locations', controller('location/post'))
-->bind('location')
+->bind('location_post')
+;
+
+/* Update a location */
+$app->put('/locations/{id}', controller('location/update'))
+->assert('id', '\d+')
+->bind('location_update')
+;
+
+/* Delete a location */
+$app->delete('/locations/{id}', controller('location/delete'))
+->assert('id', '\d+')
+->bind('location_delete')
 ;
 
 /* All parties */

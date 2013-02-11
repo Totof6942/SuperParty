@@ -1,7 +1,5 @@
 <?php
 
-include('autoload.php');
-
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;

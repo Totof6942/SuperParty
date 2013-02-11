@@ -48,7 +48,7 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}">{{ 'Homepage'|trans }}</a></li>
-                            <li {% if 'locations' == active %}class="active"{% endif %}><a href="{{ path('locations') }}">{{ 'Locations'|trans }}</a></li>
+                            <li {% if 'locations' == active %}class="active"{% endif %}><a href="{{ path('locations_get') }}">{{ 'Locations'|trans }}</a></li>
                             <li {% if 'parties' == active %}class="active"{% endif %}><a href="{{ path('parties') }}">{{ 'Parties'|trans }}</a></li>
                         </ul>
 
