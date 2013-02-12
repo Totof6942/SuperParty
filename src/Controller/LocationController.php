@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Model\Entity\Location;
 use Model\Finder\LocationFinder;
+use Model\DataMapper\LocationDataMapper;
 
 class LocationController 
 {
@@ -71,16 +72,46 @@ class LocationController
     }
 
     /**
+     * Admin get a Location for update
+     * 
+     * @param Request     $request
+     * @param Application $app
+     * @param int         $id 
+     */
+    public function adminGetForUpdateAction(Request $request, Application $app, $id)
+    {
+        $location = (new LocationFinder($app['db']))->findOneById($id);
+        
+        if (empty($location)) {
+            return new Response('Location not found', 404);
+        }
+        
+        $form = $app['form.factory']->createBuilder('form', $location)
+            ->add('name',        'text')
+            ->add('adress',      'text')
+            ->add('zip_code',    'number')
+            ->add('city',        'text')
+            ->add('phone',       'number',   array('required' => false,))
+            ->add('description', 'textarea', array('required' => false, 'attr' => array('rows' => 3,)))
+            ->getForm();
+
+        return $app['twig']->render('admin_location_update.html', array(
+                'form'     => $form->createView(),
+                'location' => $location,
+            ));
+    }
+
+    /**
      * Admin update a Location
      * 
      * @param Request     $request
      * @param Application $app
      * @param int         $id 
      */
-    public function adminUpdate(Request $request, Application $app, $id) 
+    public function adminUpdateAction(Request $request, Application $app, $id) 
     {
-        
-        return $app['twig']->render('location.html', array());
+        echo 'passe'; die;
+        return $app->redirect('admin_locations_get');
     }
 
     /**
@@ -90,9 +121,20 @@ class LocationController
      * @param Application $app
      * @param int         $id 
      */
-    public function adminDelete(Request $request, Application $app, $id) 
+    public function adminDeleteAction(Request $request, Application $app, $id) 
     {
+        $location = (new LocationFinder($app['db']))->findOneById($id);
+        
+        if (empty($location)) {
+            return new Response('Location not found', 404);
+        }
 
-        return $app['twig']->render('location.html', array());
+        $mapper = new LocationDataMapper($app['db']);
+        $mapper->remove($location);
+
+        // return 204
+        $app['session']->setFlash('success', 'The location has been deleted.');
+
+        return $app->redirect('admin_locations_get');
     }
 }

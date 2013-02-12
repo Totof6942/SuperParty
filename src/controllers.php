@@ -43,6 +43,12 @@ $app->get('/admin/locations', controller('location/adminIndex'))
 ->bind('admin_locations_get')
 ;
 
+/* Admin update form location */
+$app->get('/admin/locations/{id}', controller('location/adminGetForUpdate'))
+->assert('id', '\d+')
+->bind('admin_location_get')
+;
+
 /* Admin update a location */
 $app->put('/admin/locations/{id}', controller('location/adminUpdate'))
 ->assert('id', '\d+')

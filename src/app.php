@@ -3,20 +3,20 @@
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
-use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
-use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
+use Symfony\Component\Translation\Loader\YamlFileLoader as YamlTranslation;
+use Symfony\Component\Validator\Mapping\Loader\YamlFileLoader as YamlValidator;
 
 $app = new Application();
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
-$app->register(new ServiceControllerServiceProvider());
 $app->register(new DoctrineServiceProvider());
 
 $app->register(new TwigServiceProvider(), array(
@@ -27,7 +27,7 @@ $app->register(new TwigServiceProvider(), array(
 
 $app->register(new TranslationServiceProvider());
 $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
-    $translator->addLoader('yaml', new YamlFileLoader());
+    $translator->addLoader('yaml', new YamlTranslation());
 
     $translator->addResource('yaml', __DIR__.'/../resources/locales/fr.yml', 'fr');
 
@@ -40,5 +40,10 @@ function controller($shortName)
 
     return sprintf('Controller\%sController::%sAction', ucfirst($shortClass), $shortMethod);
 }
+
+// Configure the validator service
+$app['validator.mapping.class_metadata_factory'] = new ClassMetadataFactory(
+    new YamlValidator(__DIR__ . '/../config/validation.yml')
+);
 
 return $app;
