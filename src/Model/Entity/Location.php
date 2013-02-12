@@ -48,7 +48,7 @@ class Location
      * @param srting $phone
      * @param srting $description
      */
-    /*public function __construct($name, $adress, $zip_code, $city, $phone=null, $description=null)
+    public function __construct($name, $adress, $zip_code, $city, $phone=null, $description=null)
     {
         $this->setName($name);
         $this->setAdress($adress);
@@ -56,7 +56,7 @@ class Location
         $this->setCity($city);
         $this->setPhone($phone);
         $this->setDescription($description);
-    }*/
+    }
 
     /**
      * @return int

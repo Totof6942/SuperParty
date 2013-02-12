@@ -13,8 +13,7 @@ class LocationController
 
     public function indexAction(Request $request, Application $app)
     {
-        $location = new Location();
-        $form = $app['form.factory']->createBuilder('form', $location)
+        $form = $app['form.factory']->createBuilder('form')
             ->add('name',        'text')
             ->add('adress',      'text')
             ->add('zip_code',    'number')
