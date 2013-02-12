@@ -39,6 +39,7 @@
                     <legend>Porposer une soirée</legend>
                         {{ form_widget(formParty) }}
                         <div class="form-actions">
+                            <input type="hidden" name="location_id" value="{{ location.id }}">
                             <button type="submit" class="btn btn-primary">{{ 'Add'|trans }}</button>
                         </div>
                 </fieldset>
