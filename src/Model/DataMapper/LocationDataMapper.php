@@ -4,9 +4,11 @@ namespace Model\DataMapper;
 
 use Doctrine\DBAL\Connection;
 
+use Model\Finder\Hydratation;
+
 class LocationDataMapper
 {
-    
+
     /**
      * @var ressource
      */
@@ -19,11 +21,31 @@ class LocationDataMapper
 
     /**
      * @param  Location $object
-     * @return int
      */
     public function persist($object)
     {
+        if (null === $object->getId()) {
+            $this->con->insert('locations', array(
+                    'name'        => $object->getName(),
+                    'adress'      => $object->getAdress(),
+                    'zip_code'    => $object->getZipCode(),
+                    'city'        => $object->getCity(),
+                    'phone'       => $object->getPhone(),
+                    'description' => $object->getDescription(),
+                ));
 
+            (new Hydratation())->setAttributeValue($object, $this->con->lastInsertId(), 'id');
+        } else {
+            $this->con->update('locations', array(
+                    'name'        => $object->getName(),
+                    'adress'      => $object->getAdress(),
+                    'zip_code'    => $object->getZipCode(),
+                    'city'        => $object->getCity(),
+                    'phone'       => $object->getPhone(),
+                    'description' => $object->getDescription(),
+
+                ), array('id' => $object->getId()));
+        }
     }
 
     /**

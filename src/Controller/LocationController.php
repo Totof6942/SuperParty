@@ -55,8 +55,31 @@ class LocationController
      */
     public function postAction(Request $request, Application $app) 
     {
-        
-        return $app['twig']->render('location.html', array());
+
+        $form = $app['form.factory']->createBuilder('form')
+            ->add('name',        'text')
+            ->add('adress',      'text')
+            ->add('zip_code',    'number')
+            ->add('city',        'text')
+            ->add('phone',       'number',   array('required' => false,))
+            ->add('description', 'textarea', array('required' => false, 'attr' => array('rows' => 3,)))
+            ->getForm();
+        $form->bindRequest($request);
+
+        $location = new Location(
+                $form->get('name')->getData(),
+                $form->get('adress')->getData(),
+                $form->get('zip_code')->getData(),
+                $form->get('city')->getData(),
+                $form->get('phone')->getData(),
+                $form->get('description')->getData()
+            );
+
+        (new LocationDataMapper($app['db']))->persist($location);
+
+        $app['session']->setFlash('success', 'The location has been added.');
+
+        return $app->redirect('/locations/'.$location->getId());
     }
 
     /**
