@@ -62,8 +62,14 @@ $app->delete('/admin/locations/{id}', controller('location/adminDelete'))
 ;
 
 /* All parties */
-$app->get('/parties', controller('party/parties'))
-->bind('parties')
+$app->get('/parties', controller('party/index'))
+->bind('parties_get')
+;
+
+/* One party */
+$app->get('/parties/{id}', controller('party/getById'))
+->assert('id', '\d+')
+->bind('party_get')
 ;
 
 $app->error(function (\Exception $e, $code) use ($app) {

@@ -4,10 +4,10 @@ namespace Model\Finder;
 
 use Doctrine\DBAL\Connection;
 
-use Model\Entity\Location;
-use Model\Finder\LocationFinder;
+use Model\Entity\Party;
+use Model\Finder\PartyFinder;
 
-class LocationFinder implements FinderInterface
+class PartyFinder implements FinderInterface
 {
 
     /**
@@ -33,8 +33,8 @@ class LocationFinder implements FinderInterface
     public function findAll()
     {
         $qb = $this->con->createQueryBuilder()
-                ->select('l.*')
-                ->from('locations', 'l');
+                ->select('p.*')
+                ->from('parties', 'p');
 
 
         $sth = $this->con->prepare($qb);
@@ -42,10 +42,10 @@ class LocationFinder implements FinderInterface
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach ($datas as $cur) {
-            $locations[$cur['id']] = $this->hydrate($cur);
+            $parties[$cur['id']] = $this->hydrate($cur);
         }
 
-        return $locations;
+        return $parties;
     }
 
     /**
@@ -57,9 +57,9 @@ class LocationFinder implements FinderInterface
     public function findOneById($id)
     {
         $qb = $this->con->createQueryBuilder()
-                ->select('l.*')
-                ->from('locations', 'l')
-                ->where('l.id = :id');
+                ->select('p.*')
+                ->from('parties', 'p')
+                ->where('p.id = :id');
 
         $cur = $this->con->fetchAssoc($qb, array('id' => $id));
 
@@ -71,18 +71,20 @@ class LocationFinder implements FinderInterface
     }
 
     /**
-     * Create a Location
+     * Create a Party
      *
      * @param $cur array
      *
-     * @return Location
+     * @return Party
      */
     private function hydrate($cur)
     {
-        $location = new Location($cur['name'], $cur['adress'], $cur['zip_code'], $cur['city'], $cur['phone'], $cur['description']);
-        (new Hydratation())->setAttributeValue($location, $cur['id'], 'id');
+        $date = (null === $cur['date']) ? null : new \DateTime($cur['date']);
+        $party = new Party($cur['name'], $date, $cur['message']);
+        
+        (new Hydratation())->setAttributeValue($party, $cur['id'], 'id');
 
-        return $location;
+        return $party;
     }
 
 }
