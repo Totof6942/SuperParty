@@ -16,11 +16,21 @@ use Model\DataMapper\LocationDataMapper;
 class LocationController 
 {
 
+    /**
+     * Get all Location and create a form to add a Location
+     *
+     * @param Request     $request
+     * @param Application $app
+     */
     public function indexAction(Request $request, Application $app)
     {
         $form = $app['form.factory']->create(new LocationType());
+        $locations = (new LocationFinder($app['db']))->findAll();
 
-        return $app['twig']->render('locations.html', array('form' => $form->createView()));
+        return $app['twig']->render('locations.html', array(
+                'form'      => $form->createView(),
+                'locations' => $locations,
+            ));
     }
 
     /**
@@ -66,7 +76,7 @@ class LocationController
 
         $app['session']->setFlash('success', 'The location has been added.');
 
-        return $app->redirect('/locations/'.$location->getId());
+        return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location->getId())));
     }
 
     /**
@@ -114,7 +124,7 @@ class LocationController
     public function adminUpdateAction(Request $request, Application $app, $id) 
     {
         echo 'passe'; die;
-        return $app->redirect('admin_locations_get');
+        return $app->redirect($app['url_generator']->generate('admin_locations_get'));
     }
 
     /**
@@ -138,6 +148,6 @@ class LocationController
         // return 204
         $app['session']->setFlash('success', 'The location has been deleted.');
 
-        return $app->redirect('admin_locations_get');
+        return $app->redirect($app['url_generator']->generate('admin_locations_get'));
     }
 }
