@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+use Form\LocationType;
 use Model\Entity\Location;
 use Model\Finder\LocationFinder;
 use Model\DataMapper\LocationDataMapper;
@@ -17,14 +18,7 @@ class LocationController
 
     public function indexAction(Request $request, Application $app)
     {
-        $form = $app['form.factory']->createBuilder('form')
-            ->add('name',        'text')
-            ->add('adress',      'text')
-            ->add('zip_code',    'number')
-            ->add('city',        'text')
-            ->add('phone',       'number',   array('required' => false,))
-            ->add('description', 'textarea', array('required' => false, 'attr' => array('rows' => 3,)))
-            ->getForm();
+        $form = $app['form.factory']->create(new LocationType());
 
         return $app['twig']->render('locations.html', array('form' => $form->createView()));
     }
@@ -55,24 +49,17 @@ class LocationController
      */
     public function postAction(Request $request, Application $app) 
     {
-
-        $form = $app['form.factory']->createBuilder('form')
-            ->add('name',        'text')
-            ->add('adress',      'text')
-            ->add('zip_code',    'number')
-            ->add('city',        'text')
-            ->add('phone',       'number',   array('required' => false,))
-            ->add('description', 'textarea', array('required' => false, 'attr' => array('rows' => 3,)))
-            ->getForm();
+        $form = $app['form.factory']->create(new LocationType());
         $form->bindRequest($request);
+        $data = $form->getData();
 
         $location = new Location(
-                $form->get('name')->getData(),
-                $form->get('adress')->getData(),
-                $form->get('zip_code')->getData(),
-                $form->get('city')->getData(),
-                $form->get('phone')->getData(),
-                $form->get('description')->getData()
+                $data['name'],
+                $data['adress'],
+                $data['zip_code'],
+                $data['city'],
+                $data['phone'],
+                $data['description']
             );
 
         (new LocationDataMapper($app['db']))->persist($location);
@@ -108,15 +95,8 @@ class LocationController
         if (empty($location)) {
             return new Response('Location not found', 404);
         }
-        
-        $form = $app['form.factory']->createBuilder('form', $location)
-            ->add('name',        'text')
-            ->add('adress',      'text')
-            ->add('zip_code',    'number')
-            ->add('city',        'text')
-            ->add('phone',       'number',   array('required' => false,))
-            ->add('description', 'textarea', array('required' => false, 'attr' => array('rows' => 3,)))
-            ->getForm();
+
+        $form = $app['form.factory']->create(new LocationType(), $location);
 
         return $app['twig']->render('admin_location_update.html', array(
                 'form'     => $form->createView(),

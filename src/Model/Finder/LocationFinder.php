@@ -41,7 +41,8 @@ class LocationFinder implements FinderInterface
                 ->select('l.*')
                 ->from('locations', 'l');
 
-        $sth = $qb;
+
+        $sth = $this->con->prepare($qb);
         $sth->execute();
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
