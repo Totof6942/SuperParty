@@ -132,7 +132,27 @@ class LocationController
      */
     public function adminUpdateAction(Request $request, Application $app, $id) 
     {
-        echo 'passe'; die;
+        $location = (new LocationFinder($app['db']))->findOneById($id);
+        
+        if (empty($location)) {
+            return new Response('Location not found', 404);
+        }
+
+        $form = $app['form.factory']->create(new LocationType());
+        $form->bindRequest($request);
+        $data = $form->getData();
+
+        $location->setName($data['name']);
+        $location->setAdress($data['adress']);
+        $location->setZipCode($data['zip_code']);
+        $location->setCity($data['city']);
+        $location->setPhone($data['phone']);
+        $location->setDescription($data['description']);
+
+        (new LocationDataMapper($app['db']))->persist($location);
+
+        $app['session']->setFlash('success', 'The location has been updated.');
+
         return $app->redirect($app['url_generator']->generate('admin_locations_get'));
     }
 
