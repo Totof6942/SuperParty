@@ -17,7 +17,7 @@
             
             <ul>
                 {% for party in parties %}
-                    <li><a href="{{ path('location_get', {id: party.id }) }}">{{ party.name }}</a></li>
+                    <li><a href="{{ path('party_get', {id: party.id }) }}">{{ party.name }}</a></li>
                 {% else %}
                     <li>Pas de soirée à venir.</li>
                 {% endfor %}

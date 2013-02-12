@@ -17,12 +17,55 @@
             {% if location.phone is null %}Non renseigné{% else %}{{ location.phone }}{% endif %}<br />
             {% if location.description is null %}Non renseignée{% else %}{{ location.description }}{% endif %}
         </div>
-        <div class="span4">
-            <h2>Soirée</h2>
-        
+        <div class="span6">
+
         </div>
-        <div class="span4">
+    </div>
+
+    <div class="row">
+        <div class="span6">
+            <h2>Soirées</h2>
+        
+            <ul>
+                {% for party in location.parties %}
+                    <li><a href="{{ path('party_get', {id: party.id }) }}">{{ party.name }}</a> - {{ party.date|date(timezone="Europe/Paris", 'd/m/Y H:i') }}</li>
+                {% else %}
+                    <li>Pas de soirée prévu pour {{ location.name }}.</li>
+                {% endfor %}
+            </ul>
+
+            <form action="/" method="POST" {{ form_enctype(formParty) }} class="form-horizontal">
+                <fieldset>
+                    <legend>Porposer une soirée</legend>
+                        {{ form_widget(formParty) }}
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">{{ 'Add'|trans }}</button>
+                        </div>
+                </fieldset>
+            </form>
+
+        </div>
+        <div class="span6">
             <h2>Commentaires</h2>
+
+            {% for comment in location.comments %}
+                <blockquote>
+                    <p>{{ comment.body }}</p>
+                    <small>par <strong>{{ comment.username }}</strong>, {{ comment.createdAt|date(timezone="Europe/Paris", 'd/m/Y H:i') }}</small>
+                </blockquote>
+            {% else %}
+                Pas de commentaire posté pour {{ location.name }}.
+            {% endfor %}
+
+            <form action="/" method="POST" {{ form_enctype(commentParty) }} class="form-horizontal">
+                <fieldset>
+                    <legend>Poster un commentaire</legend>
+                        {{ form_widget(commentParty) }}
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">{{ 'Add'|trans }}</button>
+                        </div>
+                </fieldset>
+            </form>
 
         </div>
     </div>

@@ -41,6 +41,16 @@ class Location
     private $description;
 
     /**
+     * @var array
+     */
+    private $parties;
+
+    /**
+     * @var array
+     */
+    private $comments;
+
+    /**
      * @param int    $name
      * @param srting $adress
      * @param int    $zip_code
@@ -160,6 +170,38 @@ class Location
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param array $parties
+     */
+    public function setParties($parties)
+    {
+        $this->parties = $parties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParties()
+    {
+        return $this->parties;
+    }
+
+    /**
+     * @param array $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 
 }

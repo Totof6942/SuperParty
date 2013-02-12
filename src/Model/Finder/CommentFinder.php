@@ -5,10 +5,10 @@ namespace Model\Finder;
 use Doctrine\DBAL\Connection;
 
 use Model\Entity\Location;
-use Model\Entity\Party;
-use Model\Finder\PartyFinder;
+use Model\Entity\Comment;
+use Model\Finder\CommentFinder;
 
-class PartyFinder implements FinderInterface
+class CommentFinder implements FinderInterface
 {
 
     /**
@@ -34,23 +34,23 @@ class PartyFinder implements FinderInterface
     public function findAll()
     {
         $qb = $this->con->createQueryBuilder()
-                ->select('p.*')
-                ->from('parties', 'p');
+                ->select('c.*')
+                ->from('comments', 'c');
 
         $sth = $this->con->executeQuery($qb);
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
-        $parties = array();
+        $comments = array();
 
         foreach ($datas as $cur) {
-            $parties[$cur['id']] = $this->hydrate($cur);
+            $comments[$cur['id']] = $this->hydrate($cur);
         }
 
-        return $parties;
+        return $comments;
     }
 
     /**
-     * Returns all parties for a Location
+     * Returns all comments for a Location
      *
      * @param Location $location
      * 
@@ -59,22 +59,20 @@ class PartyFinder implements FinderInterface
     public function findAllForLocation(Location $location)
     {
         $qb = $this->con->createQueryBuilder()
-                ->select('p.*')
-                ->from('parties', 'p')
-                ->where('p.location_id = :location_id');
+                ->select('c.*')
+                ->from('comments', 'c')
+                ->where('c.location_id = :location_id');
 
         $sth = $this->con->executeQuery($qb, array(':location_id' => $location->getId()));
-        /*$stmt->bindValue(':location_id', $location->getId());
-        $sth->execute();*/
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
-        $parties = array();
+        $comments = array();
 
         foreach ($datas as $cur) {
-            $parties[$cur['id']] = $this->hydrate($cur);
+            $comments[$cur['id']] = $this->hydrate($cur);
         }
 
-        return $parties;
+        return $comments;
     }
 
     /**
@@ -86,9 +84,9 @@ class PartyFinder implements FinderInterface
     public function findOneById($id)
     {
         $qb = $this->con->createQueryBuilder()
-                ->select('p.*')
-                ->from('parties', 'p')
-                ->where('p.id = :id');
+                ->select('c.*')
+                ->from('comments', 'c')
+                ->where('c.id = :id');
 
         $cur = $this->con->fetchAssoc($qb, array('id' => $id));
 
@@ -100,20 +98,20 @@ class PartyFinder implements FinderInterface
     }
 
     /**
-     * Create a Party
+     * Create a Comment
      *
      * @param $cur array
      *
-     * @return Party
+     * @return Comment
      */
     private function hydrate($cur)
     {
-        $date = (null === $cur['date']) ? null : new \DateTime($cur['date']);
-        $party = new Party($cur['name'], $date, $cur['message']);
+        $date = (null === $cur['created_at']) ? null : new \DateTime($cur['created_at']);
+        $comment = new Comment($cur['username'], $cur['body'], $date);
         
-        (new Hydratation())->setAttributeValue($party, $cur['id'], 'id');
+        (new Hydratation())->setAttributeValue($comment, $cur['id'], 'id');
 
-        return $party;
+        return $comment;
     }
 
 }

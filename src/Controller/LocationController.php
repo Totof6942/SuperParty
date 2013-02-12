@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+use Form\PartyType;
+use Form\CommentType;
 use Form\LocationType;
 use Model\Entity\Location;
 use Model\Finder\LocationFinder;
@@ -42,13 +44,20 @@ class LocationController
      */
     public function getByIdAction(Request $request, Application $app, $id) 
     {
-        $location = (new LocationFinder($app['db']))->findOneById($id);
+        $location = (new LocationFinder($app['db']))->findOneByIdWithCommentsAndParties($id);
 
         if (empty($location)) {
             return new Response('Location not found', 404);
         }
 
-        return $app['twig']->render('location.html', array('location' => $location));
+        $formParty = $app['form.factory']->create(new PartyType());
+        $commentParty = $app['form.factory']->create(new CommentType());
+
+        return $app['twig']->render('location.html', array(
+                'location'     => $location,
+                'formParty'    => $formParty->createView(),
+                'commentParty' => $commentParty->createView(),
+            ));
     }
 
     /**

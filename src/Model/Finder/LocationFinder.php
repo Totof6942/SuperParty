@@ -37,9 +37,10 @@ class LocationFinder implements FinderInterface
                 ->from('locations', 'l');
 
 
-        $sth = $this->con->prepare($qb);
-        $sth->execute();
+        $sth = $this->con->executeQuery($qb);
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+        $locations = array();
 
         foreach ($datas as $cur) {
             $locations[$cur['id']] = $this->hydrate($cur);
@@ -65,6 +66,29 @@ class LocationFinder implements FinderInterface
 
         if (!empty($cur)) {
             return $this->hydrate($cur);
+        }
+
+        return null;
+    }
+
+    /**
+     * Return a Location with these comments and parties
+     *
+     * @param  mixed      $id
+     * @return null|mixed
+     */
+    public function findOneByIdWithCommentsAndParties($id)
+    {
+        $location = $this->findOneById($id);
+
+        if (!empty($location)) {
+            $commentFinder = new CommentFinder($this->con);
+            $location->setComments($commentFinder->findAllForLocation($location));
+            
+            $partyFinder = new PartyFinder($this->con);
+            $location->setParties($partyFinder->findAllForLocation($location));
+
+            return $location;
         }
 
         return null;

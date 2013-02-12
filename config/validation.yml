@@ -14,3 +14,17 @@ Model\Entity\Location:
             - Regex:
                 pattern: "/\d{10}/"
                 message: Bad phone number
+
+Model\Entity\Comment:
+    properies:
+        username:
+            - NotBlank: ~
+        body:
+            - NotBlank: ~
+
+Model\Entity\Party:
+    properies:
+        name:
+            - NotBlank: ~
+        date:
+            - DateTime: ~

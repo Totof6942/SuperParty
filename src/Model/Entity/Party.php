@@ -32,9 +32,9 @@ class Party
      */
     public function __construct($name, \DateTime $date, $message=null)
     {
-        $this->setName($name);
-        $this->setDate($date);
-        $this->setMessage($message);
+        $this->name    = $name;
+        $this->date    = $date;
+        $this->message = $message;
     }
 
     /**
