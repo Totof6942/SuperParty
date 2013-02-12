@@ -4,6 +4,9 @@ namespace Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Model\Entity\Location;
 use Model\Finder\LocationFinder;
@@ -34,8 +37,13 @@ class LocationController
      */
     public function getByIdAction(Request $request, Application $app, $id) 
     {
-        (new LocationFinder($app['db']))->findOneById($id);
-        return $app['twig']->render('location.html', array());
+        $location = (new LocationFinder($app['db']))->findOneById($id);
+
+        if (empty($location)) {
+            return new Response('Location not found', 404);
+        }
+
+        return $app['twig']->render('location.html', array('location' => $location));
     }
 
     /**
@@ -51,29 +59,40 @@ class LocationController
     }
 
     /**
-     * Update a Location
+     * Admin get all Locations
+     * 
+     * @param Request     $request
+     * @param Application $app
+     */
+    public function adminIndexAction(Request $request, Application $app)
+    {
+        $locations = (new LocationFinder($app['db']))->findAll();
+        return $app['twig']->render('admin_locations.html', array('locations' => $locations));
+    }
+
+    /**
+     * Admin update a Location
      * 
      * @param Request     $request
      * @param Application $app
      * @param int         $id 
      */
-    public function updateAction(Request $request, Application $app, $id) 
+    public function adminUpdate(Request $request, Application $app, $id) 
     {
         
         return $app['twig']->render('location.html', array());
     }
 
     /**
-     * Delete a Location
+     * Admin delete a Location
      * 
      * @param Request     $request
      * @param Application $app
      * @param int         $id 
      */
-    public function deleteAction(Request $request, Application $app, $id) 
+    public function adminDelete(Request $request, Application $app, $id) 
     {
 
         return $app['twig']->render('location.html', array());
     }
-
 }

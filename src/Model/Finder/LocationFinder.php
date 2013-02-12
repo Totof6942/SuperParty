@@ -4,6 +4,9 @@ namespace Model\Finder;
 
 use Doctrine\DBAL\Connection;
 
+use Model\Entity\Location;
+use Model\Finder\LocationFinder;
+
 class LocationFinder implements FinderInterface
 {
 
@@ -38,11 +41,11 @@ class LocationFinder implements FinderInterface
         $sth->execute();
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
-/*        foreach ($datas as $cur) {
+        foreach ($datas as $cur) {
             $this->locations[$cur['id']] = $this->hydrate($cur);
         }
 
-        return $this->locations;*/
+        return $this->locations;
     }
 
     /**
@@ -55,14 +58,12 @@ class LocationFinder implements FinderInterface
     {
         $cur = $this->con->fetchAssoc("SELECT * FROM locations WHERE id = :id", array('id' => $id));
 
-        debug($cur);
-
-/*        if (!empty($cur)) {
+        if (!empty($cur)) {
             return $this->hydrate($cur);
         }
 
         return null;
-*/    }
+    }
 
     /**
      * Create a Location
@@ -73,9 +74,8 @@ class LocationFinder implements FinderInterface
      */
     private function hydrate($cur)
     {
-        $date = (null === $cur['created_at']) ? null : new \DateTime($cur['created_at']);
-        $location = new Location($cur['name'], $date);
-        $location->setId($cur['id']);
+        $location = new Location($cur['name'], $cur['adress'], $cur['zip_code'], $cur['city'], $cur['phone'], $cur['description']);
+        (new Hydratation())->setAttributeValue($location, $cur['id'], 'id');
 
         return $location;
     }

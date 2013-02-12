@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% set active = "administration" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+            <h1>Administration des lieux</h1>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Adresse
+                        </th>
+                        <th>
+                            Téléphone
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for location in locations %}
+                        <tr>
+                            <td>
+                                {{ location.name }}
+                            </td>
+                            <td>
+                                {{ location.adress }}<br />
+                                {{ location.zipCode }} {{ location.city }}
+                            </td>
+                            <td>
+                                {{ location.phone }}
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_location_update', {id: location.id }) }}" class="btn btn-mini"><i class="icon-pencil"></i> Modifier</a>
+                                <form method="POST" action="{{ path('admin_location_delete', {id: location.id }) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">
+                                <em>Aucun lieu actuellement.</em>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

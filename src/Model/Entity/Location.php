@@ -50,12 +50,12 @@ class Location
      */
     public function __construct($name, $adress, $zip_code, $city, $phone=null, $description=null)
     {
-        $this->setName($name);
-        $this->setAdress($adress);
-        $this->setzip_code($zip_code);
-        $this->setCity($city);
-        $this->setPhone($phone);
-        $this->setDescription($description);
+        $this->name        = $name;
+        $this->adress      = $adress;
+        $this->zip_code    = $zip_code;
+        $this->city        = $city;
+        $this->phone       = $phone;
+        $this->description = $description;
     }
 
     /**

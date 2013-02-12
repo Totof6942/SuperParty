@@ -54,10 +54,10 @@
 
                         <ul class="nav pull-right">
                             {% if app.session.get('user') %}
-                                <li class="dropdown {% if 'connexion' == active %}active{% endif %}">
+                                <li class="dropdown {% if 'administration' == active %}active{% endif %}">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'Administration'|trans }} <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#"><i class="icon-globe"></i> {{ 'Locations manager'|trans }}</a></li>
+                                        <li><a href="{{ path('admin_locations_get') }}"><i class="icon-globe"></i> {{ 'Locations manager'|trans }}</a></li>
                                         <li><a href="#"><i class="icon-glass"></i> {{ 'Parties manager'|trans }}</a></li>
                                         <li><a href="#"><i class="icon-comment"></i> {{ 'Comments manager'|trans }}</a></li>
                                         <li class="divider"></li>

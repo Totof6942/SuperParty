@@ -12,11 +12,10 @@ class ConnectionController
     public function loginAction(Request $request, Application $app)
     {
         $form = $app['form.factory']->createBuilder('form')
-        ->add('email', 'email', array(
-            'label'       => 'Email',
+        ->add('login', 'text', array(
+            'label'       => 'Login',
             'constraints' => array(
                 new Constraints\NotBlank(),
-                new Constraints\Email(),
             ),
         ))
         ->add('password', 'password', array(
@@ -32,12 +31,12 @@ class ConnectionController
 
             if ($form->isValid()) {
 
-                $email    = $form->get('email')->getData();
+                $login    = $form->get('login')->getData();
                 $password = $form->get('password')->getData();
 
-                if ('email@example.com' == $email && 'password' == $password) {
+                if ('admin' === $login && 'admin' === $password) {
                     $app['session']->set('user', array(
-                        'email' => $email,
+                        'login' => $login,
                     ));
 
                     $app['session']->setFlash('notice', 'You are now connected');
@@ -45,7 +44,7 @@ class ConnectionController
                     return $app->redirect($app['url_generator']->generate('homepage'));
                 }
 
-                $form->addError(new FormError('Email / password does not match (email@example.com / password)'));
+                $form->addError(new FormError('Login / password does not match (admin/ admin)'));
             }
         }
 

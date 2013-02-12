@@ -38,16 +38,21 @@ $app->post('/locations', controller('location/post'))
 ->bind('location_post')
 ;
 
-/* Update a location */
-$app->put('/locations/{id}', controller('location/update'))
-->assert('id', '\d+')
-->bind('location_update')
+/* Admin get all locations */
+$app->get('/admin/locations', controller('location/adminIndex'))
+->bind('admin_locations_get')
 ;
 
-/* Delete a location */
-$app->delete('/locations/{id}', controller('location/delete'))
+/* Admin update a location */
+$app->put('/admin/locations/{id}', controller('location/adminUpdate'))
 ->assert('id', '\d+')
-->bind('location_delete')
+->bind('admin_location_update')
+;
+
+/* Admin delete a location */
+$app->delete('/admin/locations/{id}', controller('location/adminDelete'))
+->assert('id', '\d+')
+->bind('admin_location_delete')
 ;
 
 /* All parties */
