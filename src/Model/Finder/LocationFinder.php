@@ -37,7 +37,11 @@ class LocationFinder implements FinderInterface
      */
     public function findAll()
     {
-        $sth = $this->con->prepare("SELECT * FROM locations");
+        $qb = $this->con->createQueryBuilder()
+                ->select('l.*')
+                ->from('locations', 'l');
+
+        $sth = $qb;
         $sth->execute();
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -56,7 +60,12 @@ class LocationFinder implements FinderInterface
      */
     public function findOneById($id)
     {
-        $cur = $this->con->fetchAssoc("SELECT * FROM locations WHERE id = :id", array('id' => $id));
+        $qb = $this->con->createQueryBuilder()
+                ->select('l.*')
+                ->from('locations', 'l')
+                ->where('l.id = :id');
+
+        $cur = $this->con->fetchAssoc($qb, array('id' => $id));
 
         if (!empty($cur)) {
             return $this->hydrate($cur);
