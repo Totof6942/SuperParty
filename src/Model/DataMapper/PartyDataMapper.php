@@ -37,12 +37,9 @@ class PartyDataMapper
             (new Hydratation())->setAttributeValue($object, $this->con->lastInsertId(), 'id');
         } else {
             $this->con->update('parties', array(
-                    /*'name'        => $object->getName(),
-                    'adress'      => $object->getAdress(),
-                    'zip_code'    => $object->getZipCode(),
-                    'city'        => $object->getCity(),
-                    'phone'       => $object->getPhone(),
-                    'description' => $object->getDescription(),*/
+                    'name'        => $object->getName(),
+                    'message'      => $object->getMessage(),
+                    /*'zip_code'    => $object->getZipCode(),*/
 
                 ), array('id' => $object->getId()));
         }

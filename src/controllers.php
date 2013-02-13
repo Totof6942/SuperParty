@@ -73,6 +73,29 @@ $app->get('/parties/{id}', controller('party/getById'))
 ->bind('party_get')
 ;
 
+/* Admin get all parties */
+$app->get('/admin/parties', controller('party/adminIndex'))
+->bind('admin_parties_get')
+;
+
+/* Admin update form party */
+$app->get('/admin/parties/{id}', controller('party/adminGetForUpdate'))
+->assert('id', '\d+')
+->bind('admin_party_get')
+;
+
+/* Admin update a party */
+$app->put('/admin/parties/{id}', controller('party/adminUpdate'))
+->assert('id', '\d+')
+->bind('admin_party_update')
+;
+
+/* Admin delete a party */
+$app->delete('/admin/parties/{id}', controller('party/adminDelete'))
+->assert('id', '\d+')
+->bind('admin_party_delete')
+;
+
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
