@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% set active = "administration" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+            <h1>{{ 'Comments manager'|trans }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <form action="{{ path('admin_comment_update', {id: comment.id }) }}" method="POST" novalidate {{ form_enctype(form) }} class="form-horizontal">
+                <fieldset>
+                    <legend>{{ 'Update the comment'|trans }}</legend>
+                        {{ form_widget(form) }}
+                        <div class="form-actions">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-primary">{{ 'Update'|trans }}</button>
+                            <a href="{{ path('admin_comments_get') }}" class="btn">{{ 'Cancel'|trans }}</a>
+                        </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% set active = "administration" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+            <h1>Administration des soirées</h1>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for party in parties %}
+                        <tr>
+                            <td>
+                                {{ party.name }}
+                            </td>
+                            <td>
+                                {{ party.date|date(timezone="Europe/Paris", 'd/m/Y H:i') }}
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_party_get', {id: party.id }) }}" class="btn btn-mini"><i class="icon-pencil"></i> Modifier</a>
+                                <form method="POST" action="{{ path('admin_party_delete', {id: party.id }) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">
+                                <em>Aucune soirée actuellement.</em>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

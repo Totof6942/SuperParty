@@ -15,6 +15,7 @@ CREATE  TABLE IF NOT EXISTS `parties` (
   `name`        VARCHAR(255)  NOT NULL,
   `date`        DATETIME      NOT NULL,
   `message`     TEXT          NULL,
+  `is_valid`    BOOLEAN       NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_location_party_idx` (`location_id` ASC),
   CONSTRAINT `fk_location_party`

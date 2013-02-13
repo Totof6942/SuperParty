@@ -96,6 +96,29 @@ $app->delete('/admin/parties/{id}', controller('party/adminDelete'))
 ->bind('admin_party_delete')
 ;
 
+/* Admin get all comments */
+$app->get('/admin/comments', controller('comment/adminIndex'))
+->bind('admin_comments_get')
+;
+
+/* Admin update form comment */
+$app->get('/admin/comments/{id}', controller('comment/adminGetForUpdate'))
+->assert('id', '\d+')
+->bind('admin_comment_get')
+;
+
+/* Admin update a comment */
+$app->put('/admin/comments/{id}', controller('comment/adminUpdate'))
+->assert('id', '\d+')
+->bind('admin_comment_update')
+;
+
+/* Admin delete a comment */
+$app->delete('/admin/comments/{id}', controller('comment/adminDelete'))
+->assert('id', '\d+')
+->bind('admin_comment_delete')
+;
+
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
