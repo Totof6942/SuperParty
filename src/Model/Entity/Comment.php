@@ -26,6 +26,11 @@ class Comment
     private $created_at;
 
     /**
+     * @var Location
+     */
+    private $location;
+
+    /**
      * @param string   $username
      * @param string   $body
      * @param DateTime $created_at
@@ -91,6 +96,22 @@ class Comment
     public function getCreatedAt()
     {
         return $this->created_at;
+    }
+
+    /**
+     * @param Location $location
+     */
+    public function setLocation(Location $location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 
 }

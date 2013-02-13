@@ -26,21 +26,18 @@ class PartyDataMapper
     {
         if (null === $object->getId()) {
             $this->con->insert('parties', array(
-/*                    'name'        => $object->getName(),
-                    'adress'      => $object->getAdress(),
-                    'zip_code'    => $object->getZipCode(),
-                    'city'        => $object->getCity(),
-                    'phone'       => $object->getPhone(),
-                    'description' => $object->getDescription(),
-*/                ));
+                    'location_id' => $object->getLocation()->getId(),
+                    'name'        => $object->getName(),
+                    'date'        => $object->getDate()->format('Y-m-d H:i:s'),
+                    'message'     => $object->getMessage(),
+                ));
 
             (new Hydratation())->setAttributeValue($object, $this->con->lastInsertId(), 'id');
         } else {
             $this->con->update('parties', array(
                     'name'        => $object->getName(),
-                    'message'      => $object->getMessage(),
-                    /*'zip_code'    => $object->getZipCode(),*/
-
+                    'message'     => $object->getMessage(),
+                    'date'        => $object->getDate()->format('Y-m-d H:i:s'),
                 ), array('id' => $object->getId()));
         }
     }

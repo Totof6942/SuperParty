@@ -26,13 +26,11 @@ class CommentDataMapper
     {
         if (null === $object->getId()) {
             $this->con->insert('comments', array(
-/*                    'name'        => $object->getName(),
-                    'adress'      => $object->getAdress(),
-                    'zip_code'    => $object->getZipCode(),
-                    'city'        => $object->getCity(),
-                    'phone'       => $object->getPhone(),
-                    'description' => $object->getDescription(),
-*/                ));
+                    'location_id' => $object->getLocation()->getId(),
+                    'username'    => $object->getUsername(),
+                    'body'        => $object->getBody(),
+                    'created_at'  => $object->getCreatedAt()->format('Y-m-d H:i:s'),
+                ));
 
             (new Hydratation())->setAttributeValue($object, $this->con->lastInsertId(), 'id');
         } else {

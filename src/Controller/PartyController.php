@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Form\PartyType;
 use Model\Entity\Party;
 use Model\Finder\PartyFinder;
+use Model\Finder\LocationFinder;
 use Model\DataMapper\PartyDataMapper;
 
 class PartyController 
@@ -47,6 +48,42 @@ class PartyController
         }
 
         return $app['twig']->render('party.html', array('party' => $party));
+    }
+
+    /**
+     * Get a Party by his id
+     * 
+     * @param Request     $request
+     * @param Application $app
+     * @param int         $location_id 
+     */
+    public function postAction(Request $request, Application $app, $location_id)
+    {
+        $location = (new LocationFinder($app['db']))->findOneById($location_id);
+        
+        if (empty($location)) {
+            return new Response('Location not found', 404);
+        }
+
+        $form = $app['form.factory']->create(new PartyType());
+        $form->bindRequest($request);
+        $data = $form->getData();
+
+        $party = new Party(
+                $data['name'],
+                // $data['date'],
+                new \DateTime(),
+                false,
+                $data['message']
+            );
+
+        $party->setLocation($location);
+
+        (new PartyDataMapper($app['db']))->persist($party);
+
+        $app['session']->setFlash('success', 'The party has been added.');
+
+        return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location->getId())));
     }
 
     /**

@@ -34,12 +34,11 @@
                 {% endfor %}
             </ul>
 
-            <form action="/" method="POST" {{ form_enctype(formParty) }} class="form-horizontal">
+            <form action="{{ path('party_post', {location_id: location.id }) }}" method="POST" {{ form_enctype(formParty) }} class="form-horizontal">
                 <fieldset>
                     <legend>Porposer une soirée</legend>
                         {{ form_widget(formParty) }}
                         <div class="form-actions">
-                            <input type="hidden" name="location_id" value="{{ location.id }}">
                             <button type="submit" class="btn btn-primary">{{ 'Add'|trans }}</button>
                         </div>
                 </fieldset>
@@ -58,7 +57,7 @@
                 Pas de commentaire posté pour {{ location.name }}.
             {% endfor %}
 
-            <form action="/" method="POST" {{ form_enctype(commentParty) }} class="form-horizontal">
+            <form action="{{ path('comment_post', {location_id: location.id }) }}" method="POST" {{ form_enctype(commentParty) }} class="form-horizontal">
                 <fieldset>
                     <legend>Poster un commentaire</legend>
                         {{ form_widget(commentParty) }}

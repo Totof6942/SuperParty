@@ -32,6 +32,7 @@
                             </td>
                             <td>
                                 <a href="{{ path('admin_party_get', {id: party.id }) }}" class="btn btn-mini"><i class="icon-pencil"></i> Modifier</a>
+
                                 <form method="POST" action="{{ path('admin_party_delete', {id: party.id }) }}">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i> Supprimer</button>

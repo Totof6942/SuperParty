@@ -26,15 +26,27 @@ class Party
     private $message;
 
     /**
+     * @var boolean
+     */
+    private $is_valid;
+
+    /**
+     * @var Location
+     */
+    private $location;
+
+    /**
      * @param string   $name
      * @param DateTime $date
+     * @param boolean  $is_valid
      * @param string   $message
      */
-    public function __construct($name, \DateTime $date, $message=null)
+    public function __construct($name, \DateTime $date, $is_valid, $message=null)
     {
-        $this->name    = $name;
-        $this->date    = $date;
-        $this->message = $message;
+        $this->name     = $name;
+        $this->date     = $date;
+        $this->is_valid = $is_valid;
+        $this->message  = $message;
     }
 
     /**
@@ -91,6 +103,38 @@ class Party
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * @param boolean $is_valid
+     */
+    public function setIsValid($is_valid)
+    {
+        $this->is_valid = $is_valid;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsValid()
+    {
+        return $this->is_valid;
+    }
+
+    /**
+     * @param Location $location
+     */
+    public function setLocation(Location $location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 
 }
