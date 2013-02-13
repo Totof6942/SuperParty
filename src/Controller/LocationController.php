@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Geocoder\Geocoder;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,6 +54,8 @@ class LocationController
         $formParty = $app['form.factory']->create(new PartyType());
         $commentParty = $app['form.factory']->create(new CommentType());
 
+        // $geocoder = new Geocoder();
+
         return $app['twig']->render('location.html', array(
                 'location'     => $location,
                 'formParty'    => $formParty->createView(),
@@ -70,8 +73,19 @@ class LocationController
     {
         $form = $app['form.factory']->create(new LocationType());
         $form->bindRequest($request);
-        $data = $form->getData();
+        
+        if (!$form->isValid()) {
+            $app['session']->setFlash('error', 'The location has not been added.');
 
+            $locations = (new LocationFinder($app['db']))->findAll();
+            
+            return $app['twig']->render('locations.html', array(
+                    'form'      => $form->createView(),
+                    'locations' => $locations,
+                ));
+        }
+
+        $data = $form->getData();
         $location = new Location(
                 $data['name'],
                 $data['adress'],
@@ -140,6 +154,16 @@ class LocationController
 
         $form = $app['form.factory']->create(new LocationType());
         $form->bindRequest($request);
+
+        if (!$form->isValid()) {
+            $app['session']->setFlash('error', 'The location has not been updated.');
+            
+            return $app['twig']->render('admin_location_update.html', array(
+                    'form'     => $form->createView(),
+                    'location' => $location,
+                ));
+        }
+
         $data = $form->getData();
 
         $location->setName($data['name']);
