@@ -8,19 +8,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\FormError;
 
-/* Home page */
-$app->get('/', controller('home/index'))
-->bind('homepage')
-;
-
-/* Login */
-$app->match('/login', controller('connection/login'))
+/* Login page */
+$app->get('/login', controller('connection/login'))
 ->bind('login')
 ;
 
-/* Logout */
-$app->match('/logout', controller('connection/logout'))
-->bind('logout')
+/* Home page */
+$app->get('/', controller('home/index'))
+->bind('homepage')
 ;
 
 /* All Locations */

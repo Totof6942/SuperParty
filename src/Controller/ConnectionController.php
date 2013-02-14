@@ -11,44 +11,21 @@ class ConnectionController
 
     public function loginAction(Request $request, Application $app)
     {
-        $form = $app['form.factory']->createBuilder('form')
-        ->add('login', 'text', array(
-            'label'       => 'Login',
-            'constraints' => array(
-                new Constraints\NotBlank(),
-            ),
-        ))
-        ->add('password', 'password', array(
-            'label'       => 'Password',
-            'constraints' => array(
-                new Constraints\NotBlank(),
-            ),
-        ))
-        ->getForm();
-
-        if ('POST' === $app['request']->getMethod()) {
-            $form->bindRequest($app['request']);
-
-            if ($form->isValid()) {
-
-                $login    = $form->get('login')->getData();
-                $password = $form->get('password')->getData();
-
-                if ('admin' === $login && 'admin' === $password) {
-                    $app['session']->set('user', array(
-                        'login' => $login,
-                    ));
-
-                    $app['session']->setFlash('notice', 'You are now connected');
-
-                    return $app->redirect($app['url_generator']->generate('homepage'));
-                }
-
-                $form->addError(new FormError('Login / password does not match (admin/ admin)'));
-            }
+        $token = $app['security']->getToken();
+        if (null !== $token) {
+            debug($token->getUser());
         }
 
-        return $app['twig']->render('login.html', array('form' => $form->createView()));
+
+        if (null !== $app['security']->getToken()) {
+            $app['session']->setFlash('notice', 'You are already logged.');
+            return $app->redirect($app['url_generator']->generate('homepage'));
+        }
+
+        return $app['twig']->render('login.html', array(
+                'error'         => $app['security.last_error']($request),
+                'last_username' => $app['session']->get('_security.last_username'),
+            ));
     }
 
     public function logoutAction(Request $request, Application $app)

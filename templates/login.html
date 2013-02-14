@@ -5,11 +5,11 @@
 
     <h1>{{ 'Login'|trans }}</h1>
 
-    <form action="" method="post" novalidate {{ form_enctype(form) }} class="form-vertical">
-        {{ form_widget(form) }}
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">{{ 'Login'|trans }}</button>
-        </div>
+    <form action="{{ path('admin_login_check') }}" method="post" class="form-vertical">
+        {{ error }}
+        <input type="text" name="_username" value="{{ last_username }}">
+        <input type="password" name="_password" value="">
+        <input type="submit" />
     </form>
 
 {% endblock %}
