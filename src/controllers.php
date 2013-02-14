@@ -1,4 +1,3 @@
-
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +10,11 @@ use Symfony\Component\Form\FormError;
 /* Login page */
 $app->get('/login', controller('connection/login'))
 ->bind('login')
+;
+
+/* Logout */
+$app->get('/admin/logout', controller('connection/logout'))
+->bind('logout')
 ;
 
 /* Home page */

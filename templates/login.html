@@ -5,11 +5,23 @@
 
     <h1>{{ 'Login'|trans }}</h1>
 
-    <form action="{{ path('admin_login_check') }}" method="post" class="form-vertical">
+    <form action="{{ path('admin_login_check') }}" method="post" class="form-horizontal">
         {{ error }}
-        <input type="text" name="_username" value="{{ last_username }}">
-        <input type="password" name="_password" value="">
-        <input type="submit" />
+        <div class="control-group">
+            <label class="control-label" for="login">Login</label>
+            <div class="controls">
+                <input type="text" id="login" name="_username" value="{{ last_username }}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+              <input type="password" id="password" name="_password" value="">
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Login" />
+        </div>
     </form>
 
 {% endblock %}
