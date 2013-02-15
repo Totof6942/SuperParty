@@ -6,12 +6,12 @@ use Geocoder\Geocoder;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Form\PartyType;
 use Form\CommentType;
 use Form\LocationType;
+use Http\JsonResponse;
 use Model\Entity\Location;
 use Model\Finder\LocationFinder;
 use Model\DataMapper\LocationDataMapper;
@@ -29,6 +29,10 @@ class LocationController
     {
         $form = $app['form.factory']->create(new LocationType());
         $locations = (new LocationFinder($app['db']))->findAll();
+
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($locations);
+        }
 
         return $app['twig']->render('locations.html', array(
                 'form'      => $form->createView(),
@@ -56,6 +60,10 @@ class LocationController
 
         // $geocoder = new Geocoder();
 
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($location);
+        }
+
         return $app['twig']->render('location.html', array(
                 'location'     => $location,
                 'formParty'    => $formParty->createView(),
@@ -73,8 +81,9 @@ class LocationController
     {
         $form = $app['form.factory']->create(new LocationType());
         $form->bindRequest($request);
-        
+        debug($form->getData());die;
         if (!$form->isValid()) {
+        echo 'passe'; die;
             $app['session']->setFlash('error', 'The location has not been added.');
 
             $locations = (new LocationFinder($app['db']))->findAll();
@@ -96,6 +105,10 @@ class LocationController
             );
 
         (new LocationDataMapper($app['db']))->persist($location);
+
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($location->getId(), 201);
+        }
 
         $app['session']->setFlash('success', 'The location has been added.');
 

@@ -1,5 +1,6 @@
 <?php
 
+use Negotiation\FormatNegotiator;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
@@ -38,18 +39,6 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
     return $translator;
 }));
 
-function controller($shortName)
-{
-    list($shortClass, $shortMethod) = explode('/', $shortName, 2);
-
-    return sprintf('Controller\%sController::%sAction', ucfirst($shortClass), $shortMethod);
-}
-
-// Configure the validator service
-$app['validator.mapping.class_metadata_factory'] = new ClassMetadataFactory(
-    new YamlValidator(__DIR__ . '/../config/validation.yml')
-);
-
 $app->register(new SecurityServiceProvider(), array(
     $app['security.firewalls'] = array(
         'secured' => array(
@@ -73,5 +62,29 @@ $app->register(new SecurityServiceProvider(), array(
         array('^.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
     ),
 ));
+
+// Configure the validator service
+$app['validator.mapping.class_metadata_factory'] = new ClassMetadataFactory(
+    new YamlValidator(__DIR__ . '/../config/validation.yml')
+);
+
+// Controller loader
+function controller($shortName)
+{
+    list($shortClass, $shortMethod) = explode('/', $shortName, 2);
+
+    return sprintf('Controller\%sController::%sAction', ucfirst($shortClass), $shortMethod);
+}
+
+// Content negotiation
+function guessBestFormat()
+{
+    $negociator = new FormatNegotiator();
+
+    $acceptHeader = isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : 'text/html';
+    $priorities = array('html', 'json', '*/*');
+
+    return $negociator->getBest($acceptHeader, $priorities);
+}
 
 return $app;

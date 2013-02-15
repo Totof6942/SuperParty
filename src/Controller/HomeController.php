@@ -4,12 +4,12 @@ namespace Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints;
 
+use Http\JsonResponse;
 use Model\Finder\LocationFinder;
 use Model\Finder\PartyFinder;
 
-class HomeController 
+class HomeController
 {
 
     public function indexAction(Request $request, Application $app)
@@ -21,6 +21,10 @@ class HomeController
             ));
 
         $parties = (new PartyFinder($app['db']))->findAllFuture();
+
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse(array($locations, $parties));
+        }
 
         return $app['twig']->render('index.html', array(
             'locations' => $locations,
