@@ -50,6 +50,31 @@ class PartyFinder implements FinderInterface
     }
 
     /**
+     * Returns all future parties.
+     *
+     * @return array
+     */
+    public function findAllFuture()
+    {
+        $qb = $this->con->createQueryBuilder()
+                ->select('p.*')
+                ->from('parties', 'p')
+                ->where('p.date >= NOW()')
+                ->orderBy('p.date', 'ASC');
+
+        $sth = $this->con->executeQuery($qb);
+        $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+        $parties = array();
+
+        foreach ($datas as $cur) {
+            $parties[$cur['id']] = $this->hydrate($cur);
+        }
+
+        return $parties;
+    }
+
+    /**
      * Returns all parties for a Location
      *
      * @param Location $location
@@ -64,8 +89,6 @@ class PartyFinder implements FinderInterface
                 ->where('p.location_id = :location_id');
 
         $sth = $this->con->executeQuery($qb, array(':location_id' => $location->getId()));
-        /*$stmt->bindValue(':location_id', $location->getId());
-        $sth->execute();*/
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         $parties = array();

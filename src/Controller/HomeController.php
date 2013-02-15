@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
 
 use Model\Finder\LocationFinder;
+use Model\Finder\PartyFinder;
 
 class HomeController 
 {
@@ -19,9 +20,11 @@ class HomeController
                 'order'   => 'DESC',
             ));
 
+        $parties = (new PartyFinder($app['db']))->findAllFuture();
+
         return $app['twig']->render('index.html', array(
             'locations' => $locations,
-            'parties'   => $app['db']->fetchAll('SELECT id, name, date FROM parties'),
+            'parties'   => $parties,
         ));
     }
 
