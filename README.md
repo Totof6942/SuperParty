@@ -3,8 +3,27 @@ SuperParty
 
 **SuperParty** developed by **[Claude Dioudonnat](https://github.com/claudusd)** and **[Christophe Poulette](https://github.com/Totof6942)** for the PHP practicals supervised by [Julien Muetton](https://github.com/themouette) and [William Durand](https://github.com/willdurand).
 
+HTML / CSS / Javascripts
+------------------------
+
+* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) version 2.3.0.
+
+Extensions included
+-------------------
+
+* [Doctrine dbal](https://github.com/doctrine/dbal)
+* [Negotiation](https://github.com/willdurand/Negotiation)
+* [Silex](https://github.com/fabpot/Silex)
+* [Symfony Form](https://github.com/symfony/Form)
+* [Symfony Locale](https://github.com/symfony/Locale)
+* [Symfony Security](https://github.com/symfony/Security)
+* [Symfony Serializer](https://github.com/symfony/Serializer)
+* [Symfony Validator](https://github.com/symfony/Validator)
+* [Symfony Yaml](https://github.com/symfony/Yaml)
+* [Twig](https://github.com/fabpot/Twig)
+
 Installation
------
+-----------
 
 Run these two commands to install it:
 
