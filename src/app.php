@@ -9,8 +9,8 @@ use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
-use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
 use Symfony\Component\Translation\Loader\YamlFileLoader as YamlTranslation;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
 use Symfony\Component\Validator\Mapping\Loader\YamlFileLoader as YamlValidator;
 
 $app = new Application();
@@ -62,10 +62,15 @@ $app->register(new SecurityServiceProvider(), array(
         ),
         'unsecured' => array(
             'anonymous' => true,
+            'users'   => array(
+                'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
+            ),
         ),
     ),
     $app['security.access_rules'] = array(
         array('^/admin', 'ROLE_ADMIN'), 
+        array('^/login$', 'ROLE_ADMIN'), 
+        array('^.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
     ),
 ));
 

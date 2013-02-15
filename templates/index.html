@@ -27,12 +27,13 @@
         </div>
         <div class="span6">
             <h2>Derniers lieux ajoutées</h2>
+
             <ul>
-                <li><a href="#">Clermont-Ferrand</a></li>
-                <li><a href="#">Clermont-Ferrand</a></li>
-                <li><a href="#">Clermont-Ferrand</a></li>
-                <li><a href="#">Clermont-Ferrand</a></li>
-                <li><a href="#">Clermont-Ferrand</a></li>
+                {% for location in locations %}
+                    <li><a href="{{ path('location_get', {id: location.id }) }}">{{ location.name }}</a></li>
+                {% else %}
+                    <li>Pas de lieu enregistré.</li>
+                {% endfor %}
             </ul>
 
             <p><a class="btn" href="{{ path('locations_get') }}">Voir tous les lieux »</a></p>

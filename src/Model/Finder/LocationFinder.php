@@ -50,6 +50,42 @@ class LocationFinder implements FinderInterface
     }
 
     /**
+     * Returns all elements with param
+     *
+     * @param array $param (example limit => 5)
+     *
+     * @return array
+     */
+    public function findWithParamAll(array $param)
+    {
+        $qb = $this->con->createQueryBuilder()
+                ->select('l.*')
+                ->from('locations', 'l');
+
+        if (array_key_exists('limit', $param)) {
+            if (is_numeric($param['limit'])) {
+                $qb->setMaxResults($param['limit']);
+            }
+        }
+
+        if (array_key_exists('orderBy', $param)) {
+            $order = (array_key_exists('order', $param) && 'DESC' === strtoupper($param['order'])) ? 'DESC' : 'ASC';
+            $qb->orderBy($param['orderBy'], $order);
+        }
+
+        $sth = $this->con->executeQuery($qb);
+        $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+        $locations = array();
+
+        foreach ($datas as $cur) {
+            $locations[$cur['id']] = $this->hydrate($cur);
+        }
+
+        return $locations;
+    }
+
+    /**
      * Retrieve an element by its id.
      *
      * @param  mixed      $id

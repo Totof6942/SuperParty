@@ -109,8 +109,7 @@ class LocationController
      * @param Application $app
      */
     public function adminIndexAction(Request $request, Application $app)
-    {$token = $app['security']->getToken();
-    debug($token->getUser());
+    {
         $locations = (new LocationFinder($app['db']))->findAll();
         return $app['twig']->render('admin_locations.html', array('locations' => $locations));
     }

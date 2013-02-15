@@ -13,11 +13,15 @@ class HomeController
 
     public function indexAction(Request $request, Application $app)
     {
-        $locations = new LocationFinder($app['db']);
-        $locations->findAll();
+        $locations  = (new LocationFinder($app['db']))->findWithParamAll(array(
+                'limit'   => 5,
+                'orderBy' => 'id',
+                'order'   => 'DESC',
+            ));
 
         return $app['twig']->render('index.html', array(
-            'parties' => $app['db']->fetchAll('SELECT id, name, date FROM parties'),
+            'locations' => $locations,
+            'parties'   => $app['db']->fetchAll('SELECT id, name, date FROM parties'),
         ));
     }
 

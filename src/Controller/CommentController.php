@@ -34,18 +34,22 @@ class CommentController
 
         $form = $app['form.factory']->create(new CommentType());
         $form->bindRequest($request);
-        $data = $form->getData();
 
-        $comment = new Comment(
-                $data['username'],
-                $data['body']
-            );
+        if (!$form->isValid()) {
+            $app['session']->setFlash('error', 'The comment has not been added.');
+        } else {
+            $data = $form->getData();
+            $comment = new Comment(
+                    $data['username'],
+                    $data['body']
+                );
 
-        $comment->setLocation($location);
+            $comment->setLocation($location);
 
-        (new CommentDataMapper($app['db']))->persist($comment);
+            (new CommentDataMapper($app['db']))->persist($comment);
 
-        $app['session']->setFlash('success', 'The comment has been added.');
+            $app['session']->setFlash('success', 'The comment has been added.');
+        }
 
         return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location->getId())));
     }

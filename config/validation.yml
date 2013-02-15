@@ -1,5 +1,5 @@
 Model\Entity\Location:
-    properies:
+    properties:
         name:
             - NotBlank: ~
         adress:
@@ -16,14 +16,14 @@ Model\Entity\Location:
                 message: Bad phone number
 
 Model\Entity\Comment:
-    properies:
+    properties:
         username:
             - NotBlank: ~
         body:
             - NotBlank: ~
 
 Model\Entity\Party:
-    properies:
+    properties:
         name:
             - NotBlank: ~
         date:
