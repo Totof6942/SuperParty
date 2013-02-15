@@ -73,6 +73,11 @@ $app->get('/parties/{id}', controller('party/getById'))
 ->bind('party_get')
 ;
 
+/* Get all parties for a location */
+$app->get('/locations/{location_id}/parties', controller('party/getForLocation'))
+->assert('location_id', '\d+')
+;
+
 /* Add a party */
 $app->post('/locations/{location_id}/parties', controller('party/post'))
 ->assert('location_id', '\d+')
@@ -102,7 +107,12 @@ $app->delete('/admin/parties/{id}', controller('party/adminDelete'))
 ->bind('admin_party_delete')
 ;
 
-/* Add a party */
+/* Get all comments for a location */
+$app->get('/locations/{location_id}/comments', controller('comment/getForLocation'))
+->assert('location_id', '\d+')
+;
+
+/* Add a comment */
 $app->post('/locations/{location_id}/comments', controller('comment/post'))
 ->assert('location_id', '\d+')
 ->bind('comment_post')

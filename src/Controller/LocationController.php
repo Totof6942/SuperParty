@@ -6,7 +6,6 @@ use Geocoder\Geocoder;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Form\PartyType;
 use Form\CommentType;
@@ -16,7 +15,7 @@ use Model\Entity\Location;
 use Model\Finder\LocationFinder;
 use Model\DataMapper\LocationDataMapper;
 
-class LocationController 
+class LocationController
 {
 
     /**
@@ -42,12 +41,12 @@ class LocationController
 
     /**
      * Get a Location by his id
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function getByIdAction(Request $request, Application $app, $id) 
+    public function getByIdAction(Request $request, Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneByIdWithCommentsAndParties($id);
 
@@ -73,11 +72,11 @@ class LocationController
 
     /**
      * Post a Location
-     * 
+     *
      * @param Request     $request
      * @param Application $app
      */
-    public function postAction(Request $request, Application $app) 
+    public function postAction(Request $request, Application $app)
     {
         $form = $app['form.factory']->create(new LocationType());
         $form->bindRequest($request);
@@ -87,7 +86,7 @@ class LocationController
             $app['session']->setFlash('error', 'The location has not been added.');
 
             $locations = (new LocationFinder($app['db']))->findAll();
-            
+
             return $app['twig']->render('locations.html', array(
                     'form'      => $form->createView(),
                     'locations' => $locations,
@@ -117,27 +116,28 @@ class LocationController
 
     /**
      * Admin get all Locations
-     * 
+     *
      * @param Request     $request
      * @param Application $app
      */
     public function adminIndexAction(Request $request, Application $app)
     {
         $locations = (new LocationFinder($app['db']))->findAll();
+
         return $app['twig']->render('admin_locations.html', array('locations' => $locations));
     }
 
     /**
      * Admin get a Location for update
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
     public function adminGetForUpdateAction(Request $request, Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($id);
-        
+
         if (empty($location)) {
             return new Response('Location not found', 404);
         }
@@ -152,15 +152,15 @@ class LocationController
 
     /**
      * Admin update a Location
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function adminUpdateAction(Request $request, Application $app, $id) 
+    public function adminUpdateAction(Request $request, Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($id);
-        
+
         if (empty($location)) {
             return new Response('Location not found', 404);
         }
@@ -170,7 +170,7 @@ class LocationController
 
         if (!$form->isValid()) {
             $app['session']->setFlash('error', 'The location has not been updated.');
-            
+
             return $app['twig']->render('admin_location_update.html', array(
                     'form'     => $form->createView(),
                     'location' => $location,
@@ -195,15 +195,15 @@ class LocationController
 
     /**
      * Admin delete a Location
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function adminDeleteAction(Request $request, Application $app, $id) 
+    public function adminDeleteAction(Request $request, Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($id);
-        
+
         if (empty($location)) {
             return new Response('Location not found', 404);
         }

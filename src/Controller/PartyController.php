@@ -5,27 +5,30 @@ namespace Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Form\PartyType;
+use Http\JsonResponse;
 use Model\Entity\Party;
 use Model\Finder\PartyFinder;
 use Model\Finder\LocationFinder;
 use Model\DataMapper\PartyDataMapper;
 
-class PartyController 
+class PartyController
 {
 
     /**
      * Get all Party
-     * 
+     *
      * @param Request     $request
      * @param Application $app
      */
     public function indexAction(Request $request, Application $app)
     {
-    	$parties = (new PartyFinder($app['db']))->findAll();
+        $parties = (new PartyFinder($app['db']))->findAll();
+
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($parties);
+        }
 
         return $app['twig']->render('parties.html', array(
                 'parties' => $parties,
@@ -34,12 +37,12 @@ class PartyController
 
     /**
      * Get a Party by his id
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function getByIdAction(Request $request, Application $app, $id) 
+    public function getByIdAction(Request $request, Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
 
@@ -47,20 +50,48 @@ class PartyController
             return new Response('Party not found', 404);
         }
 
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($party);
+        }
+
         return $app['twig']->render('party.html', array('party' => $party));
     }
 
     /**
-     * Get a Party by his id
-     * 
+     * Get all Parties for a Location
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $location_id 
+     * @param int         $location_id
+     */
+    public function getForLocationAction(Request $request, Application $app, $location_id)
+    {
+        if ('json' !== guessBestFormat()) {
+            return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location_id)));
+        }
+
+        $location = (new LocationFinder($app['db']))->findOneById($location_id);
+
+        if (empty($location)) {
+            return new JsonResponse('Location not found', 404);
+        }
+
+        $parties = (new PartyFinder($app['db']))->findAllForLocation($location);
+
+        return new JsonResponse($parties);
+    }
+
+    /**
+     * Get a Party by his id
+     *
+     * @param Request     $request
+     * @param Application $app
+     * @param int         $location_id
      */
     public function postAction(Request $request, Application $app, $location_id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($location_id);
-        
+
         if (empty($location)) {
             return new Response('Location not found', 404);
         }
@@ -88,27 +119,28 @@ class PartyController
 
     /**
      * Admin get all Parties
-     * 
+     *
      * @param Request     $request
      * @param Application $app
      */
     public function adminIndexAction(Request $request, Application $app)
     {
         $parties = (new PartyFinder($app['db']))->findAll();
+
         return $app['twig']->render('admin_parties.html', array('parties' => $parties));
     }
 
     /**
      * Admin get a Party for update
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
     public function adminGetForUpdateAction(Request $request, Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
-        
+
         if (empty($party)) {
             return new Response('Party not found', 404);
         }
@@ -123,15 +155,15 @@ class PartyController
 
     /**
      * Admin update a Party
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function adminUpdateAction(Request $request, Application $app, $id) 
+    public function adminUpdateAction(Request $request, Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
-        
+
         if (empty($party)) {
             return new Response('Party not found', 404);
         }
@@ -153,15 +185,15 @@ class PartyController
 
     /**
      * Admin delete a Party
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function adminDeleteAction(Request $request, Application $app, $id) 
+    public function adminDeleteAction(Request $request, Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
-        
+
         if (empty($party)) {
             return new Response('Party not found', 404);
         }

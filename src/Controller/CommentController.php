@@ -5,29 +5,52 @@ namespace Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Form\CommentType;
+use Http\JsonResponse;
 use Model\Entity\Comment;
 use Model\Finder\CommentFinder;
 use Model\Finder\LocationFinder;
 use Model\DataMapper\CommentDataMapper;
 
-class CommentController 
+class CommentController
 {
 
     /**
-     * Post a Comment for a Location
-     * 
+     * Get all Comments for a Location
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $location_id 
+     * @param int         $location_id
+     */
+    public function getForLocationAction(Request $request, Application $app, $location_id)
+    {
+        if ('json' !== guessBestFormat()) {
+            return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location_id)));
+        }
+
+        $location = (new LocationFinder($app['db']))->findOneById($location_id);
+
+        if (empty($location)) {
+            return new JsonResponse('Location not found', 404);
+        }
+
+        $comments = (new CommentFinder($app['db']))->findAllForLocation($location);
+
+        return new JsonResponse($comments);
+    }
+
+    /**
+     * Post a Comment for a Location
+     *
+     * @param Request     $request
+     * @param Application $app
+     * @param int         $location_id
      */
     public function postAction(Request $request, Application $app, $location_id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($location_id);
-        
+
         if (empty($location)) {
             return new Response('Location not found', 404);
         }
@@ -56,27 +79,28 @@ class CommentController
 
     /**
      * Admin get all Comments
-     * 
+     *
      * @param Request     $request
      * @param Application $app
      */
     public function adminIndexAction(Request $request, Application $app)
     {
         $comments = (new CommentFinder($app['db']))->findAll();
+
         return $app['twig']->render('admin_comments.html', array('comments' => $comments));
     }
 
     /**
      * Admin get a Comment for update
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
     public function adminGetForUpdateAction(Request $request, Application $app, $id)
     {
         $comment = (new CommentFinder($app['db']))->findOneById($id);
-        
+
         if (empty($comment)) {
             return new Response('Comment not found', 404);
         }
@@ -91,15 +115,15 @@ class CommentController
 
     /**
      * Admin update a Comment
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function adminUpdateAction(Request $request, Application $app, $id) 
+    public function adminUpdateAction(Request $request, Application $app, $id)
     {
         $comment = (new CommentFinder($app['db']))->findOneById($id);
-        
+
         if (empty($comment)) {
             return new Response('Comment not found', 404);
         }
@@ -120,15 +144,15 @@ class CommentController
 
     /**
      * Admin delete a Comment
-     * 
+     *
      * @param Request     $request
      * @param Application $app
-     * @param int         $id 
+     * @param int         $id
      */
-    public function adminDeleteAction(Request $request, Application $app, $id) 
+    public function adminDeleteAction(Request $request, Application $app, $id)
     {
         $comment = (new CommentFinder($app['db']))->findOneById($id);
-        
+
         if (empty($comment)) {
             return new Response('Comment not found', 404);
         }

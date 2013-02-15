@@ -4,9 +4,8 @@ namespace Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints;
 
-class ConnectionController 
+class ConnectionController
 {
 
     public function loginAction(Request $request, Application $app)
@@ -20,6 +19,7 @@ class ConnectionController
     public function logoutAction(Request $request, Application $app)
     {
         $app['session']->clear();
+
         return $app->redirect($app['url_generator']->generate('homepage'));
     }
 
