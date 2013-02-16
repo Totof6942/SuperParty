@@ -5,6 +5,7 @@
         "symfony/console": "2.1.*",
         "symfony/config": "2.1.*",
         "symfony/css-selector": "2.1.*",
+        "symfony/doctrine-bridge": "2.1.*",
         "symfony/dom-crawler": "2.1.*",
         "symfony/filesystem": "2.1.*",
         "symfony/finder": "2.1.*",
@@ -21,6 +22,8 @@
         "monolog/monolog": ">=1.0.0,<1.2-dev",
         "twig/twig": ">=1.2.0,<2.0-dev",
         "doctrine/dbal": ">=2.2.0,<2.4.0-dev",
-        "willdurand/negotiation": "1.0.*@dev"
+        "willdurand/negotiation": "1.0.*@dev",
+        "willdurand/geocoder": "*",
+        "kriswallsmith/buzz": "dev-master"
     }
 }

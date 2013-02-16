@@ -32,8 +32,10 @@ class Hydratation
                 $doc =  $property->getDocComment();
                 preg_match('#@var ([a-zA-Z]+) *.*\n#s', $doc, $annotations);
 
-                if (2 === count($annotations) && 'datetime' === strtolower($annotations[1])) {
-                    $values[$property->name] = new \DateTime( $values[$property->name]);   
+                if (2 === count($annotations)) {
+                    if (!($values[$property->name] instanceof \DateTime) && ('datetime' === strtolower($annotations[1]))) {
+                        $values[$property->name] = new \DateTime($values[$property->name]);
+                    }
                 }
 
                 $property->setAccessible(true);

@@ -1,5 +1,5 @@
 {
-    "hash": "ddb8824f0117042668cd2efff797f74b",
+    "hash": "715f4316dd24ed4271d5959ba8f812a5",
     "packages": [
         {
             "name": "doctrine/common",
@@ -134,6 +134,51 @@
             ]
         },
         {
+            "name": "kriswallsmith/buzz",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "http://github.com/kriswallsmith/Buzz.git",
+                "reference": "v0.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/v0.8",
+                "reference": "v0.8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "time": "2013-01-14 16:07:06",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Buzz": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
+            "keywords": [
+                "curl",
+                "http client"
+            ]
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.1.0",
             "source": {
@@ -234,12 +279,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Silex.git",
-                "reference": "eb15c4b481b57b54adc51c250cd12eb650d619b3"
+                "reference": "c421eab3c4ca9d106cc5b68266d58adece8636cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Silex/zipball/eb15c4b481b57b54adc51c250cd12eb650d619b3",
-                "reference": "eb15c4b481b57b54adc51c250cd12eb650d619b3",
+                "url": "https://api.github.com/repos/fabpot/Silex/zipball/c421eab3c4ca9d106cc5b68266d58adece8636cd",
+                "reference": "c421eab3c4ca9d106cc5b68266d58adece8636cd",
                 "shasum": ""
             },
             "require": {
@@ -275,7 +320,7 @@
                 "symfony/css-selector": ">=2.1,<2.3-dev",
                 "symfony/dom-crawler": ">=2.1,<2.3-dev"
             },
-            "time": "2013-02-11 14:52:27",
+            "time": "2013-02-13 11:44:19",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -482,6 +527,56 @@
                 }
             ],
             "description": "Symfony CssSelector Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/doctrine-bridge",
+            "version": "v2.1.7",
+            "target-dir": "Symfony/Bridge/Doctrine",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/DoctrineBridge",
+                "reference": "v2.1.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/DoctrineBridge/archive/v2.1.7.zip",
+                "reference": "v2.1.7",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": ">=2.2,<2.4-dev",
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "doctrine/data-fixtures": "1.0.*",
+                "doctrine/dbal": ">=2.2,<2.4-dev",
+                "doctrine/orm": ">=2.2.3,<2.4-dev",
+                "symfony/form": "2.1.*",
+                "symfony/validator": "2.1.*"
+            },
+            "time": "2013-01-11 00:31:43",
+            "type": "symfony-bridge",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Bridge\\Doctrine": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Doctrine Bridge",
             "homepage": "http://symfony.com"
         },
         {
@@ -1409,23 +1504,83 @@
             ]
         },
         {
-            "name": "willdurand/negotiation",
-            "version": "dev-master",
+            "name": "willdurand/geocoder",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/willdurand/Negotiation",
-                "reference": "0.0.2"
+                "url": "https://github.com/willdurand/Geocoder",
+                "reference": "1.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/0.0.2",
-                "reference": "0.0.2",
+                "url": "https://api.github.com/repos/willdurand/Geocoder/zipball/1.2.1",
+                "reference": "1.2.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2013-01-20 23:09:59",
+            "require-dev": {
+                "guzzle/guzzle": "*",
+                "kriswallsmith/buzz": "*",
+                "zendframework/zend-http": "*"
+            },
+            "suggest": {
+                "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter.",
+                "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
+                "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
+                "zendframework/zend-http": "Enabling Zend_Http allows you to use the ZendHttpAdapter."
+            },
+            "time": "2013-02-03 02:01:33",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Geocoder": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                }
+            ],
+            "description": "The almost missing Geocoder PHP 5.3 library.",
+            "homepage": "http://geocoder-php.org",
+            "keywords": [
+                "abstraction",
+                "geocoder",
+                "geocoding",
+                "geoip"
+            ]
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation",
+                "reference": "47175fc9f9507356c659e495299190cfdff51800"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/47175fc9f9507356c659e495299190cfdff51800",
+                "reference": "47175fc9f9507356c659e495299190cfdff51800",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2013-02-14 00:33:06",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1463,6 +1618,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "silex/silex": 20,
-        "willdurand/negotiation": 20
+        "willdurand/negotiation": 20,
+        "kriswallsmith/buzz": 20
     }
 }

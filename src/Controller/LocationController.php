@@ -2,7 +2,6 @@
 
 namespace Controller;
 
-use Geocoder\Geocoder;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +56,12 @@ class LocationController
         $formParty = $app['form.factory']->create(new PartyType());
         $commentParty = $app['form.factory']->create(new CommentType());
 
-        // $geocoder = new Geocoder();
+        $buzz     = new \Buzz\Browser(new \Buzz\Client\Curl());
+        $adapter  = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
+        $geocoder = new \Geocoder\Geocoder();
+        $geocoder->registerProviders(array(
+                new \Geocoder\Provider\GoogleMapsProvider($adapter),
+            ));
 
         if ('json' === guessBestFormat()) {
             return new JsonResponse($location);
