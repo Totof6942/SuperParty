@@ -4,6 +4,8 @@ namespace Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 
 class CommentType extends AbstractType
 {
@@ -11,6 +13,13 @@ class CommentType extends AbstractType
     {
         $builder->add('username', 'text');
         $builder->add('body',     'textarea', array('attr' => array('rows' => 3,)));
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Model\Entity\Comment',
+        ));
     }
 
     public function getName()

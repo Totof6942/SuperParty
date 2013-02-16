@@ -6,13 +6,13 @@ Model\Entity\Location:
             - NotBlank: ~
         zip_code:
             - Regex:
-                pattern: "/\d{5}/"
+                pattern: "/^\d{5}$/"
                 message: Bad zip code
         city:
             - NotBlank: ~
         phone:
             - Regex:
-                pattern: "/\d{10}/"
+                pattern: "/^\d{10}$/"
                 message: Bad phone number
 
 Model\Entity\Comment:

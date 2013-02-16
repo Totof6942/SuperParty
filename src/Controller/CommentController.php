@@ -55,18 +55,13 @@ class CommentController
             return new Response('Location not found', 404);
         }
 
-        $form = $app['form.factory']->create(new CommentType());
+        $comment = new Comment();
+        $form = $app['form.factory']->create(new CommentType($comment), $comment);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
-            $app['session']->setFlash('error', 'The comment has not been added.');
+            $app['session']->setFlash('error', 'The comment has not been added. All fields are mandatory.');
         } else {
-            $data = $form->getData();
-            $comment = new Comment(
-                    $data['username'],
-                    $data['body']
-                );
-
             $comment->setLocation($location);
 
             (new CommentDataMapper($app['db']))->persist($comment);
@@ -105,7 +100,7 @@ class CommentController
             return new Response('Comment not found', 404);
         }
 
-        $form = $app['form.factory']->create(new CommentType(), $comment);
+        $form = $app['form.factory']->create(new CommentType($comment), $comment);
 
         return $app['twig']->render('admin_comment_update.html', array(
                 'form'     => $form->createView(),
@@ -128,12 +123,13 @@ class CommentController
             return new Response('Comment not found', 404);
         }
 
-        $form = $app['form.factory']->create(new CommentType());
+        $form = $app['form.factory']->create(new CommentType($comment), $comment);
         $form->bindRequest($request);
-        $data = $form->getData();
 
-        $comment->setUsername($data['username']);
-        $comment->setBody($data['body']);
+        if (!$form->isValid()) {
+            $app['session']->setFlash('error', 'The comment has not been added.');
+            return $app->redirect($app['url_generator']->generate('admin_comment_get', array('id' => $id)));
+        }
 
         (new CommentDataMapper($app['db']))->persist($comment);
 
@@ -160,7 +156,6 @@ class CommentController
         $mapper = new CommentDataMapper($app['db']);
         $mapper->remove($comment);
 
-        // return 204
         $app['session']->setFlash('success', 'The comment has been deleted.');
 
         return $app->redirect($app['url_generator']->generate('admin_comments_get'));

@@ -96,23 +96,19 @@ class PartyController
             return new Response('Location not found', 404);
         }
 
-        $form = $app['form.factory']->create(new PartyType());
+        $party = new Party();
+        $form = $app['form.factory']->create(new PartyType($party), $party);        
         $form->bindRequest($request);
-        $data = $form->getData();
 
-        $party = new Party(
-                $data['name'],
-                // $data['date'],
-                new \DateTime(),
-                false,
-                $data['message']
-            );
+        if (!$form->isValid()) {
+            $app['session']->setFlash('error', 'The party has not been added. Name and date are mandatory.');
+        } else {
+            $party->setLocation($location);
 
-        $party->setLocation($location);
+            (new PartyDataMapper($app['db']))->persist($party);
 
-        (new PartyDataMapper($app['db']))->persist($party);
-
-        $app['session']->setFlash('success', 'The party has been added.');
+            $app['session']->setFlash('success', 'The party has been added.');
+        }
 
         return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location->getId())));
     }
@@ -145,10 +141,10 @@ class PartyController
             return new Response('Party not found', 404);
         }
 
-        $form = $app['form.factory']->create(new PartyType(), $party);
+        $form = $app['form.factory']->create(new PartyType($party), $party);
 
         return $app['twig']->render('admin_party_update.html', array(
-                'form'     => $form->createView(),
+                'form'  => $form->createView(),
                 'party' => $party,
             ));
     }
@@ -168,13 +164,13 @@ class PartyController
             return new Response('Party not found', 404);
         }
 
-        $form = $app['form.factory']->create(new PartyType());
+        $form = $app['form.factory']->create(new PartyType($party), $party);   
         $form->bindRequest($request);
-        $data = $form->getData();
 
-        $party->setName($data['name']);
-        // $party->setDate(new \DateTime($data['date']));
-        $party->setMessage($data['message']);
+        if (!$form->isValid()) {
+            $app['session']->setFlash('error', 'The party has not been added.');
+            return $app->redirect($app['url_generator']->generate('admin_party_get', array('id' => $id)));
+        }
 
         (new PartyDataMapper($app['db']))->persist($party);
 
@@ -201,7 +197,6 @@ class PartyController
         $mapper = new PartyDataMapper($app['db']);
         $mapper->remove($party);
 
-        // return 204
         $app['session']->setFlash('success', 'The party has been deleted.');
 
         return $app->redirect($app['url_generator']->generate('admin_parties_get'));

@@ -139,8 +139,8 @@ class LocationFinder implements FinderInterface
      */
     private function hydrate($cur)
     {
-        $location = new Location($cur['name'], $cur['adress'], $cur['zip_code'], $cur['city'], $cur['phone'], $cur['description']);
-        (new Hydratation())->setAttributeValue($location, $cur['id'], 'id');
+        $location = new Location();
+        (new Hydratation())->setObject($location, $cur);
 
         return $location;
     }

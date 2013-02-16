@@ -6,7 +6,7 @@ class Party
 {
 
     /**
-     * @var iny
+     * @var int
      */
     private $id;
 
@@ -16,7 +16,7 @@ class Party
     private $name;
 
     /**
-     * @var DateTime
+     * @var DateTime esrhsrth  rtjhrsdejtr ethr th
      */
     private $date;
 
@@ -34,20 +34,6 @@ class Party
      * @var Location
      */
     private $location;
-
-    /**
-     * @param string   $name
-     * @param DateTime $date
-     * @param boolean  $is_valid
-     * @param string   $message
-     */
-    public function __construct($name, \DateTime $date, $is_valid, $message=null)
-    {
-        $this->name     = $name;
-        $this->date     = $date;
-        $this->is_valid = $is_valid;
-        $this->message  = $message;
-    }
 
     /**
      * @return int

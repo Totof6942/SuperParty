@@ -30,16 +30,9 @@ class Comment
      */
     private $location;
 
-    /**
-     * @param string   $username
-     * @param string   $body
-     * @param DateTime $created_at
-     */
-    public function __construct($username, $body, \DateTime $created_at=null)
+    public function __construct()
     {
-        $this->username   = $username;
-        $this->body       = $body;
-        $this->created_at = (empty($created_at)) ? $this->created_at = new \DateTime() : $created_at;
+        $this->created_at = new \DateTime();
     }
 
     /**

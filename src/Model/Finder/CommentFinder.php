@@ -106,10 +106,9 @@ class CommentFinder implements FinderInterface
      */
     private function hydrate($cur)
     {
-        $date = (null === $cur['created_at']) ? null : new \DateTime($cur['created_at']);
-        $comment = new Comment($cur['username'], $cur['body'], $date);
-        
-        (new Hydratation())->setAttributeValue($comment, $cur['id'], 'id');
+        $cur['created_at'] = (null === $cur['created_at']) ? null : new \DateTime($cur['created_at']);
+        $comment = new Comment();
+        (new Hydratation())->setObject($comment, $cur);
 
         return $comment;
     }

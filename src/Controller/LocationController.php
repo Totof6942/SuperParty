@@ -78,11 +78,11 @@ class LocationController
      */
     public function postAction(Request $request, Application $app)
     {
-        $form = $app['form.factory']->create(new LocationType());
+        $location = new Location();
+        $form = $app['form.factory']->create(new LocationType($location), $location);
         $form->bindRequest($request);
-        debug($form->getData());die;
+
         if (!$form->isValid()) {
-        echo 'passe'; die;
             $app['session']->setFlash('error', 'The location has not been added.');
 
             $locations = (new LocationFinder($app['db']))->findAll();
@@ -92,16 +92,6 @@ class LocationController
                     'locations' => $locations,
                 ));
         }
-
-        $data = $form->getData();
-        $location = new Location(
-                $data['name'],
-                $data['adress'],
-                $data['zip_code'],
-                $data['city'],
-                $data['phone'],
-                $data['description']
-            );
 
         (new LocationDataMapper($app['db']))->persist($location);
 
@@ -142,7 +132,7 @@ class LocationController
             return new Response('Location not found', 404);
         }
 
-        $form = $app['form.factory']->create(new LocationType(), $location);
+        $form = $app['form.factory']->create(new LocationType($location), $location);
 
         return $app['twig']->render('admin_location_update.html', array(
                 'form'     => $form->createView(),
@@ -165,7 +155,7 @@ class LocationController
             return new Response('Location not found', 404);
         }
 
-        $form = $app['form.factory']->create(new LocationType());
+        $form = $app['form.factory']->create(new LocationType($location), $location);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -176,15 +166,6 @@ class LocationController
                     'location' => $location,
                 ));
         }
-
-        $data = $form->getData();
-
-        $location->setName($data['name']);
-        $location->setAdress($data['adress']);
-        $location->setZipCode($data['zip_code']);
-        $location->setCity($data['city']);
-        $location->setPhone($data['phone']);
-        $location->setDescription($data['description']);
 
         (new LocationDataMapper($app['db']))->persist($location);
 
@@ -211,7 +192,6 @@ class LocationController
         $mapper = new LocationDataMapper($app['db']);
         $mapper->remove($location);
 
-        // return 204
         $app['session']->setFlash('success', 'The location has been deleted.');
 
         return $app->redirect($app['url_generator']->generate('admin_locations_get'));

@@ -123,7 +123,7 @@ $app->get('/admin/comments', controller('comment/adminIndex'))
 ->bind('admin_comments_get')
 ;
 
-/* Admin update form comment */
+/* Admin get comment for update */
 $app->get('/admin/comments/{id}', controller('comment/adminGetForUpdate'))
 ->assert('id', '\d+')
 ->bind('admin_comment_get')

@@ -49,25 +49,7 @@ class Location
      * @var array
      */
     private $comments;
-
-    /**
-     * @param int    $name
-     * @param srting $adress
-     * @param int    $zip_code
-     * @param srting $city
-     * @param srting $phone
-     * @param srting $description
-     */
-    public function __construct($name, $adress, $zip_code, $city, $phone=null, $description=null)
-    {
-        $this->name        = $name;
-        $this->adress      = $adress;
-        $this->zip_code    = $zip_code;
-        $this->city        = $city;
-        $this->phone       = $phone;
-        $this->description = $description;
-    }
-
+    
     /**
      * @return int
      */

@@ -131,10 +131,8 @@ class PartyFinder implements FinderInterface
      */
     private function hydrate($cur)
     {
-        $date = (null === $cur['date']) ? null : new \DateTime($cur['date']);
-        $party = new Party($cur['name'], $date, $cur['message']);
-        
-        (new Hydratation())->setAttributeValue($party, $cur['id'], 'id');
+        $party = new Party();
+        (new Hydratation())->setObject($party, $cur);
 
         return $party;
     }
