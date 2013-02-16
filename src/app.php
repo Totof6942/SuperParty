@@ -40,26 +40,19 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
 }));
 
 $app->register(new SecurityServiceProvider(), array(
-    $app['security.firewalls'] = array(
+    'security.firewalls' => array(
         'secured' => array(
-            'pattern' => '^/admin/',
-            'form'    => array('login_path' => '/login', 'check_path' => '/admin/login_check'),
-            'logout'  => array('logout_path' => '/admin/logout'),
-            'users'   => array(
-                'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
-            ),
-        ),
-        'unsecured' => array(
+            'pattern'   => '^.*$',
             'anonymous' => true,
-            'users'   => array(
+            'form'      => array('login_path' => '/login', 'check_path' => '/admin/login_check'),
+            'logout'    => array('logout_path' => '/admin/logout'),
+            'users'     => array(
                 'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
             ),
         ),
     ),
-    $app['security.access_rules'] = array(
+    'security.access_rules' => array(
         array('^/admin', 'ROLE_ADMIN'), 
-        array('^/login$', 'ROLE_ADMIN'), 
-        array('^.*$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
     ),
 ));
 
