@@ -6,7 +6,8 @@ SuperParty
 HTML / CSS / Javascripts
 ------------------------
 
-* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) version 2.3.0.
+* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) version 2.3.0
+* [Google-styled](https://github.com/todc/todc-bootstrap)
 
 Extensions included
 -------------------
