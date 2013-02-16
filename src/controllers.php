@@ -23,6 +23,11 @@ $app->get('/', controller('home/index'))
 ->bind('homepage')
 ;
 
+/* Admin page */
+$app->get('/admin', controller('home/admin'))
+->bind('adminpage')
+;
+
 /* All Locations */
 $app->get('/locations', controller('location/index'))
 ->bind('locations_get')

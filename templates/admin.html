@@ -1,0 +1,27 @@
+{% extends "layout_admin.html" %}
+
+{% block content %}
+
+    <div class="hero-unit">
+        <h1>Admin</h1>
+        <p>
+            Bienvenue sur l'application d'aministration.
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="span4">
+            <h3>{{ 'Locations manager'|trans }}</h3>
+            <a href="{{ path('admin_locations_get') }}" class="btn">Go <i class="icon-chevron-right"></i></a>
+        </div>
+        <div class="span4">
+            <h3>{{ 'Parties manager'|trans }}</h3>
+            <a href="{{ path('admin_parties_get') }}" class="btn">Go <i class="icon-chevron-right"></i></a>
+        </div>
+        <div class="span4">
+            <h3>{{ 'Comments manager'|trans }}</h3>
+            <a href="{{ path('admin_comments_get') }}" class="btn">Go <i class="icon-chevron-right"></i></a>
+        </div>
+    </div>
+    
+{% endblock %}

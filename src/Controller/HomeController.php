@@ -32,4 +32,9 @@ class HomeController
         ));
     }
 
+    public function adminAction(Request $request, Application $app)
+    {
+        return $app['twig']->render('admin.html');
+    }
+
 }

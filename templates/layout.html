@@ -54,7 +54,7 @@
 
                         <ul class="nav pull-right">
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="#">{{ 'Administration'|trans }}</a></li>
+                                <li><a href="{{ path('adminpage') }}">{{ 'Administration'|trans }}</a></li>
                             {% else %}
                                 <li {% if 'connexion' == active %}class="active"{% endif %}><a href="{{ path('login') }}">{{ 'Login'|trans }}</a></li>
                             {% endif %}
