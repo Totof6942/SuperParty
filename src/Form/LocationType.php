@@ -14,7 +14,7 @@ class LocationType extends AbstractType
         $builder->add('adress',      'text');
         $builder->add('zip_code',    'number');
         $builder->add('city',        'text');
-        $builder->add('phone',       'number',   array('required' => false,));
+        $builder->add('phone',       'text',   array('required' => false,));
         $builder->add('description', 'textarea', array('required' => false, 'attr' => array('rows' => 3,)));
     }
 

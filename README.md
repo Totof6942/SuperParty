@@ -24,7 +24,7 @@ Extensions included
 * [Twig](https://github.com/fabpot/Twig)
 
 Installation
------------
+------------
 
 Run these two commands to install it:
 
@@ -33,11 +33,17 @@ $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install --dev --prefer-source
 ```
 
+Configure database access in `config/prod.php`.
+
 Install the database:
 
 ``` bash
-$ mysql -uproject -pproject123 project < config/schema.sql
+$ mysql -u<user> -p<password> <database> < config/schema.sql
 ```
+
+If you want, there is a set of datas in `datas/project.sql`.
+
+And if you use the application in localhost with a port, configure the port in `src/app.php` on line 19.
 
 License
 -------

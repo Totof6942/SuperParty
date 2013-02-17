@@ -52,7 +52,7 @@ $app->register(new SecurityServiceProvider(), array(
         ),
     ),
     'security.access_rules' => array(
-        array('^/admin', 'ROLE_ADMIN'), 
+        array('^/admin', 'ROLE_ADMIN'),
     ),
 ));
 
