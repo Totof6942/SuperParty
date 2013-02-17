@@ -2533,3 +2533,8 @@ a.thumbnail:hover {
     border-bottom-color: #444444;
   }
 }
+
+.form-invisible {
+margin: 0;
+display: inline;
+}

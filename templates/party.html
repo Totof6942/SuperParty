@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% set active = "parties" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+            <h1>{{ party.name }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            {{ party.date|date(timezone="Europe/Paris", 'd/m/Y H:i') }}<br />
+            {{ party.message }}
+        </div>
+    </div>
+
+{% endblock %}
