@@ -21,7 +21,8 @@ class LocationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Model\Entity\Location',
+            'data_class'      => 'Model\Entity\Location',
+            'csrf_protection' => false,
         ));
     }
 

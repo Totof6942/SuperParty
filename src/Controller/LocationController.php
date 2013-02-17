@@ -50,6 +50,10 @@ class LocationController
         $location = (new LocationFinder($app['db']))->findOneByIdWithCommentsAndParties($id);
 
         if (empty($location)) {
+            if ('json' === guessBestFormat()) {
+                return new JsonResponse('Location not found', 404);
+            }
+            
             return new Response('Location not found', 404);
         }
 

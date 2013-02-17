@@ -32,7 +32,11 @@ class CommentController
         $location = (new LocationFinder($app['db']))->findOneById($location_id);
 
         if (empty($location)) {
-            return new JsonResponse('Location not found', 404);
+            if ('json' === guessBestFormat()) {
+                return new JsonResponse('Location not found', 404);
+            }
+            
+            return new Response('Location not found', 404);
         }
 
         $comments = (new CommentFinder($app['db']))->findAllForLocation($location);
@@ -52,6 +56,10 @@ class CommentController
         $location = (new LocationFinder($app['db']))->findOneById($location_id);
 
         if (empty($location)) {
+            if ('json' === guessBestFormat()) {
+                return new JsonResponse('Location not found', 404);
+            }
+            
             return new Response('Location not found', 404);
         }
 
@@ -67,6 +75,10 @@ class CommentController
             (new CommentDataMapper($app['db']))->persist($comment);
 
             $app['session']->setFlash('success', 'The comment has been added.');
+        }
+
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($comment->getId(), 201);
         }
 
         return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location->getId())));

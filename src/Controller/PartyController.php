@@ -47,6 +47,10 @@ class PartyController
         $party = (new PartyFinder($app['db']))->findOneById($id);
 
         if (empty($party)) {
+            if ('json' === guessBestFormat()) {
+                return new JsonResponse('Party not found', 404);
+            }
+            
             return new Response('Party not found', 404);
         }
 
@@ -93,6 +97,10 @@ class PartyController
         $location = (new LocationFinder($app['db']))->findOneById($location_id);
 
         if (empty($location)) {
+            if ('json' === guessBestFormat()) {
+                return new JsonResponse('Location not found', 404);
+            }
+            
             return new Response('Location not found', 404);
         }
 
@@ -108,6 +116,10 @@ class PartyController
             (new PartyDataMapper($app['db']))->persist($party);
 
             $app['session']->setFlash('success', 'The party has been added.');
+        }
+
+        if ('json' === guessBestFormat()) {
+            return new JsonResponse($party->getId(), 201);
         }
 
         return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location->getId())));

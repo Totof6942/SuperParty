@@ -15,10 +15,18 @@ class CommentType extends AbstractType
         $builder->add('body',     'textarea', array('attr' => array('rows' => 3,)));
     }
 
+    public function getDefaultOptions(array $options)
+    {
+        $options = parent::getDefaultOptions($options);
+        $options['csrf_protection'] = false;
+        return $options;
+    }
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Model\Entity\Comment',
+            'data_class'      => 'Model\Entity\Comment',
+            'csrf_protection' => false,
         ));
     }
 
