@@ -25,5 +25,8 @@
         "willdurand/negotiation": "1.0.*@dev",
         "willdurand/geocoder": "*",
         "kriswallsmith/buzz": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "": "src/" }
     }
 }
