@@ -26,6 +26,7 @@ Ce qui bug :
 ------------
 
 * Le POST via l'API REST ne semble pas fonctionner. Testé avec : 
+
 ``` bash
 $ curl -XPOST http://localhost:8000/locations -H "Accept: application/json" -H 
 'Content-Type: application/json' -d '{"location":{"name":"Cubba", "adress":"Rue machin",
