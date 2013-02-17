@@ -1,6 +1,5 @@
 vendor/
 datas/
 composer.phar
-phpunit.xml
 phpunit.phar
 php-cs-fixer.phar

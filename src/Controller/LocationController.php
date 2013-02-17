@@ -66,6 +66,7 @@ class LocationController
         $geocoder->registerProviders(array(
                 new \Geocoder\Provider\GoogleMapsProvider($adapter),
             ));
+        $result = $geocoder->geocode($location->getAdress().', '.$location->getZipCode().' '.$location->getCity());
 
         if ('json' === guessBestFormat()) {
             return new JsonResponse($location);
