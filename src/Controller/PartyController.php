@@ -86,7 +86,7 @@ class PartyController
     }
 
     /**
-     * Get a Party by his id
+     * Post a Party
      *
      * @param Request     $request
      * @param Application $app

@@ -16,7 +16,7 @@ class Party
     private $name;
 
     /**
-     * @var DateTime esrhsrth  rtjhrsdejtr ethr th
+     * @var DateTime
      */
     private $date;
 
