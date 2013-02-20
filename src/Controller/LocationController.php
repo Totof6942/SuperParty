@@ -53,7 +53,7 @@ class LocationController
             if ('json' === guessBestFormat()) {
                 return new JsonResponse('Location not found', 404);
             }
-            
+
             return new Response('Location not found', 404);
         }
 

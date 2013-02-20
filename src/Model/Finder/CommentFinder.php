@@ -53,7 +53,7 @@ class CommentFinder implements FinderInterface
      * Returns all comments for a Location
      *
      * @param Location $location
-     * 
+     *
      * @return array
      */
     public function findAllForLocation(Location $location)

@@ -30,13 +30,13 @@ SQL
     {
         $cur = $this->con->query('SELECT COUNT(*) FROM locations')->fetch(\PDO::FETCH_NUM);
         $this->assertEquals(0, $cur[0]);
-  
+
         $location = new Location();
         $location->setName('B.Box Club');
         $location->setAdress('29 rue de Eminee La Pardieu');
         $location->setZipCode('63000');
         $location->setCity('Clermont-Ferrand');
-  
+
         (new LocationDataMapper($this->con))->persist($location);
 
         $cur = $this->con->query('SELECT COUNT(*) FROM locations')->fetch(\PDO::FETCH_NUM);
@@ -65,7 +65,7 @@ SQL
         $datas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $this->assertEquals(1, count($datas));
-        $this->assertEquals('Middle Night', $datas[0]['name']);       
+        $this->assertEquals('Middle Night', $datas[0]['name']);
     }
 
     public function testRemove()

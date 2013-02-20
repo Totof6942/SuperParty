@@ -6,7 +6,7 @@ class Hydratation
 {
 
     /**
-     * @param Object $object 
+     * @param Object $object
      * @param mixed  $value
      * @param string $attribute
      */

@@ -78,7 +78,7 @@ class PartyFinder implements FinderInterface
      * Returns all parties for a Location
      *
      * @param Location $location
-     * 
+     *
      * @return array
      */
     public function findAllForLocation(Location $location)

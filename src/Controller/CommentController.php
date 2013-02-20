@@ -35,7 +35,7 @@ class CommentController
             if ('json' === guessBestFormat()) {
                 return new JsonResponse('Location not found', 404);
             }
-            
+
             return new Response('Location not found', 404);
         }
 
@@ -59,7 +59,7 @@ class CommentController
             if ('json' === guessBestFormat()) {
                 return new JsonResponse('Location not found', 404);
             }
-            
+
             return new Response('Location not found', 404);
         }
 
@@ -140,6 +140,7 @@ class CommentController
 
         if (!$form->isValid()) {
             $app['session']->setFlash('error', 'The comment has not been added.');
+
             return $app->redirect($app['url_generator']->generate('admin_comment_get', array('id' => $id)));
         }
 

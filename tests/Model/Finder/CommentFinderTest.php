@@ -13,7 +13,7 @@ class CommentFinderTest extends \TestCase
     public function setUp()
     {
         $this->con = \Doctrine\DBAL\DriverManager::getConnection(array('pdo' => new \PDO('sqlite:memory:')));
-        
+
         $this->con->exec(<<<SQL
 DROP TABLE IF EXISTS comments;
 CREATE TABLE IF NOT EXISTS comments (

@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
 class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -19,6 +18,7 @@ class CommentType extends AbstractType
     {
         $options = parent::getDefaultOptions($options);
         $options['csrf_protection'] = false;
+
         return $options;
     }
 

@@ -50,7 +50,7 @@ class PartyController
             if ('json' === guessBestFormat()) {
                 return new JsonResponse('Party not found', 404);
             }
-            
+
             return new Response('Party not found', 404);
         }
 
@@ -100,12 +100,12 @@ class PartyController
             if ('json' === guessBestFormat()) {
                 return new JsonResponse('Location not found', 404);
             }
-            
+
             return new Response('Location not found', 404);
         }
 
         $party = new Party();
-        $form = $app['form.factory']->create(new PartyType($party), $party);        
+        $form = $app['form.factory']->create(new PartyType($party), $party);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -176,11 +176,12 @@ class PartyController
             return new Response('Party not found', 404);
         }
 
-        $form = $app['form.factory']->create(new PartyType($party), $party);   
+        $form = $app['form.factory']->create(new PartyType($party), $party);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
             $app['session']->setFlash('error', 'The party has not been added.');
+
             return $app->redirect($app['url_generator']->generate('admin_party_get', array('id' => $id)));
         }
 

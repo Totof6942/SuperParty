@@ -20,7 +20,7 @@ class CommentDataMapper
     }
 
     /**
-     * @param  Location $object
+     * @param Location $object
      */
     public function persist($object)
     {

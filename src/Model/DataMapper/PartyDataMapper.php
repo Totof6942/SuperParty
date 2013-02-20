@@ -20,7 +20,7 @@ class PartyDataMapper
     }
 
     /**
-     * @param  Location $object
+     * @param Location $object
      */
     public function persist($object)
     {

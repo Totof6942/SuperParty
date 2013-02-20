@@ -36,7 +36,6 @@ class LocationFinder implements FinderInterface
                 ->select('l.*')
                 ->from('locations', 'l');
 
-
         $sth = $this->con->executeQuery($qb);
         $datas = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -120,7 +119,7 @@ class LocationFinder implements FinderInterface
         if (!empty($location)) {
             $commentFinder = new CommentFinder($this->con);
             $location->setComments($commentFinder->findAllForLocation($location));
-            
+
             $partyFinder = new PartyFinder($this->con);
             $location->setParties($partyFinder->findAllForLocation($location));
 

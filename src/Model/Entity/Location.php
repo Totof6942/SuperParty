@@ -49,11 +49,11 @@ class Location
      * @var array
      */
     private $comments;
-    
+
     /**
      * @return int
      */
-    public function getId() 
+    public function getId()
     {
         return $this->id;
     }
@@ -61,7 +61,7 @@ class Location
     /**
      * @param string $name
      */
-    public function setName($name) 
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -69,7 +69,7 @@ class Location
     /**
      * @return string
      */
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }
@@ -77,7 +77,7 @@ class Location
     /**
      * @param string $adress
      */
-    public function setAdress($adress) 
+    public function setAdress($adress)
     {
         $this->adress = $adress;
     }
@@ -85,7 +85,7 @@ class Location
     /**
      * @return string
      */
-    public function getAdress() 
+    public function getAdress()
     {
         return $this->adress;
     }

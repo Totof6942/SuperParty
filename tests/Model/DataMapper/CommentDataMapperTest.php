@@ -12,7 +12,7 @@ class CommentDataMapperTest extends \TestCase
     public function setUp()
     {
         $this->con = \Doctrine\DBAL\DriverManager::getConnection(array('pdo' => new \PDO('sqlite:memory:')));
-        
+
         $this->con->exec(<<<SQL
 DROP TABLE IF EXISTS locations;
 CREATE TABLE IF NOT EXISTS locations (
@@ -49,7 +49,7 @@ SQL
     {
         $cur = $this->con->query('SELECT COUNT(*) FROM comments')->fetch(\PDO::FETCH_NUM);
         $this->assertEquals(0, $cur[0]);
-        
+
         $location = (new LocationFinder($this->con))->findOneById(1);
         $comment = new Comment();
         $comment->setLocation($location);
@@ -84,7 +84,7 @@ SQL
         $datas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $this->assertEquals(1, count($datas));
-        $this->assertEquals('Claudus', $datas[0]['username']);       
+        $this->assertEquals('Claudus', $datas[0]['username']);
     }
 
     public function testRemove()

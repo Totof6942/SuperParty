@@ -12,7 +12,7 @@ class PartyDataMapperTest extends \TestCase
     public function setUp()
     {
         $this->con = \Doctrine\DBAL\DriverManager::getConnection(array('pdo' => new \PDO('sqlite:memory:')));
-        
+
         $this->con->exec(<<<SQL
 DROP TABLE IF EXISTS locations;
 CREATE TABLE IF NOT EXISTS locations (
@@ -48,7 +48,7 @@ SQL
     {
         $cur = $this->con->query('SELECT COUNT(*) FROM parties')->fetch(\PDO::FETCH_NUM);
         $this->assertEquals(0, $cur[0]);
-        
+
         $location = (new LocationFinder($this->con))->findOneById(1);
         $party = new Party();
         $party->setLocation($location);
@@ -83,7 +83,7 @@ SQL
         $datas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $this->assertEquals(1, count($datas));
-        $this->assertEquals('Fin partiels', $datas[0]['name']);       
+        $this->assertEquals('Fin partiels', $datas[0]['name']);
     }
 
     public function testRemove()
