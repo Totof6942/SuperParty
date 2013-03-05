@@ -45,6 +45,8 @@ If you want, there is a set of datas in `datas/project.sql`.
 
 And if you use the application in localhost with a port, configure the port in `src/app.php` on line 19.
 
+Administration login : **admin/foo**
+
 License
 -------
 
