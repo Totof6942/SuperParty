@@ -37,7 +37,7 @@
         "doctrine/dbal": ">=2.2.0,<2.4.0-dev",
         "willdurand/negotiation": "1.0.*@dev",
         "willdurand/geocoder": "*",
-        "kriswallsmith/buzz": "dev-master"
+        "kriswallsmith/buzz": "v0.10"
     },
     "autoload": {
         "psr-0": { "": "src/" }
