@@ -1,4 +1,17 @@
 {
+    "name": "Totof6942/SuperParty",
+    "description": "PHP project supervised by Julien Muetton and William Durand at Clermont-Ferrand's IUT.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christophe Poulette",
+            "email": "poulette.christophe92@gmail.com"
+        },
+        {
+            "name": "Claude Dioudonnat",
+            "email": "claude.dioudonnat@gmail.com"
+        }
+    ],
     "require": {
         "silex/silex": "1.0.*@dev",
         "symfony/browser-kit": "2.1.*",
