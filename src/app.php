@@ -16,8 +16,6 @@ use Symfony\Component\Validator\Mapping\Loader\YamlFileLoader as YamlValidator;
 
 $app = new Application();
 
-$_SERVER['SERVER_PORT'] = 8000;
-
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new FormServiceProvider());
@@ -27,7 +25,6 @@ $app->register(new DoctrineServiceProvider());
 $app->register(new TwigServiceProvider(), array(
     'twig.form.templates' => array('form_div_layout.html.twig', 'common/form_div_layout.html'),
     'twig.path'           => array(__DIR__.'/../templates'),
-    // 'twig.options' => array('cache' => __DIR__.'/../cache/twig'),
 ));
 
 $app->register(new TranslationServiceProvider());
