@@ -20,7 +20,7 @@ class CommentDataMapper
     }
 
     /**
-     * @param Model\Entity\Comment $object
+     * @param \Model\Entity\Comment $object
      */
     public function persist($object)
     {
@@ -42,7 +42,7 @@ class CommentDataMapper
     }
 
     /**
-     * @param Model\Entity\Comment $object
+     * @param \Model\Entity\Comment $object
      */
     public function remove($object)
     {

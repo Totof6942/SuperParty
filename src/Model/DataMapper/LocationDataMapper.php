@@ -20,7 +20,7 @@ class LocationDataMapper
     }
 
     /**
-     * @param Model\Entity\Location $object
+     * @param \Model\Entity\Location $object
      */
     public function persist($object)
     {
@@ -49,7 +49,7 @@ class LocationDataMapper
     }
 
     /**
-     * @param Model\Entity\Location $object
+     * @param \Model\Entity\Location $object
      */
     public function remove($object)
     {

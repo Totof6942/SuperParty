@@ -12,14 +12,14 @@ class PartyFinder implements FinderInterface
 {
 
     /**
-     * @var ressource
+     * @var \Doctrine\DBAL\Connection
      */
     private $con;
 
     /**
      * Constructor
      *
-     * @param ressource $con Instance of Connection
+     * @param \Doctrine\DBAL\Connection $con Instance of Connection
      */
     public function __construct(Connection $con)
     {

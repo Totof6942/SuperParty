@@ -20,7 +20,7 @@ class PartyDataMapper
     }
 
     /**
-     * @param Model\Entity\Party $object
+     * @param \Model\Entity\Party $object
      */
     public function persist($object)
     {
@@ -43,7 +43,7 @@ class PartyDataMapper
     }
 
     /**
-     * @param Model\Entity\Party $object
+     * @param \Model\Entity\Party $object
      */
     public function remove($object)
     {
