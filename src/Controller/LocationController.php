@@ -20,10 +20,9 @@ class LocationController
     /**
      * Get all Location and create a form to add a Location
      *
-     * @param Request     $request
      * @param Application $app
      */
-    public function indexAction(Request $request, Application $app)
+    public function indexAction(Application $app)
     {
         $form = $app['form.factory']->create(new LocationType());
         $locations = (new LocationFinder($app['db']))->findAll();
@@ -41,11 +40,10 @@ class LocationController
     /**
      * Get a Location by his id
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function getByIdAction(Request $request, Application $app, $id)
+    public function getByIdAction(Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneByIdWithCommentsAndParties($id);
 
@@ -67,7 +65,7 @@ class LocationController
                 new \Geocoder\Provider\GoogleMapsProvider($adapter),
             ));
         try {
-            $result = $geocoder->geocode($location->getAdress().', '.$location->getZipCode().' '.$location->getCity());
+            $geocoder->geocode($location->getAdress().', '.$location->getZipCode().' '.$location->getCity());
         } catch (\Exception $e) {}
 
         if ('json' === guessBestFormat()) {
@@ -90,7 +88,7 @@ class LocationController
     public function postAction(Request $request, Application $app)
     {
         $location = new Location();
-        $form = $app['form.factory']->create(new LocationType($location), $location);
+        $form = $app['form.factory']->create(new LocationType, $location);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -118,10 +116,9 @@ class LocationController
     /**
      * Admin get all Locations
      *
-     * @param Request     $request
      * @param Application $app
      */
-    public function adminIndexAction(Request $request, Application $app)
+    public function adminIndexAction(Application $app)
     {
         $locations = (new LocationFinder($app['db']))->findAll();
 
@@ -131,11 +128,10 @@ class LocationController
     /**
      * Admin get a Location for update
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function adminGetForUpdateAction(Request $request, Application $app, $id)
+    public function adminGetForUpdateAction(Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($id);
 
@@ -143,7 +139,7 @@ class LocationController
             return new Response('Location not found', 404);
         }
 
-        $form = $app['form.factory']->create(new LocationType($location), $location);
+        $form = $app['form.factory']->create(new LocationType, $location);
 
         return $app['twig']->render('admin_location_update.html', array(
                 'form'     => $form->createView(),
@@ -166,7 +162,7 @@ class LocationController
             return new Response('Location not found', 404);
         }
 
-        $form = $app['form.factory']->create(new LocationType($location), $location);
+        $form = $app['form.factory']->create(new LocationType, $location);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -188,11 +184,10 @@ class LocationController
     /**
      * Admin delete a Location
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function adminDeleteAction(Request $request, Application $app, $id)
+    public function adminDeleteAction(Application $app, $id)
     {
         $location = (new LocationFinder($app['db']))->findOneById($id);
 

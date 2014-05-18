@@ -6,7 +6,7 @@ class Hydratation
 {
 
     /**
-     * @param Object $object
+     * @param object $object
      * @param mixed  $value
      * @param string $attribute
      */
@@ -19,7 +19,7 @@ class Hydratation
     }
 
     /**
-     * @param Obejct $object
+     * @param obejct $object
      * @param array  $values (propertyName => value)
      */
     public function setObject($object, $values)

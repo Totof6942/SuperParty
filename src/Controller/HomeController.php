@@ -12,7 +12,7 @@ use Model\Finder\PartyFinder;
 class HomeController
 {
 
-    public function indexAction(Request $request, Application $app)
+    public function indexAction(Application $app)
     {
         $locations  = (new LocationFinder($app['db']))->findWithParamAll(array(
                 'limit'   => 5,
@@ -32,7 +32,7 @@ class HomeController
         ));
     }
 
-    public function adminAction(Request $request, Application $app)
+    public function adminAction(Application $app)
     {
         return $app['twig']->render('admin.html');
     }

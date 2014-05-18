@@ -19,11 +19,10 @@ class CommentController
     /**
      * Get all Comments for a Location
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $location_id
      */
-    public function getForLocationAction(Request $request, Application $app, $location_id)
+    public function getForLocationAction(Application $app, $location_id)
     {
         if ('json' !== guessBestFormat()) {
             return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location_id)));
@@ -64,7 +63,7 @@ class CommentController
         }
 
         $comment = new Comment();
-        $form = $app['form.factory']->create(new CommentType($comment), $comment);
+        $form = $app['form.factory']->create(new CommentType, $comment);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -87,10 +86,9 @@ class CommentController
     /**
      * Admin get all Comments
      *
-     * @param Request     $request
      * @param Application $app
      */
-    public function adminIndexAction(Request $request, Application $app)
+    public function adminIndexAction(Application $app)
     {
         $comments = (new CommentFinder($app['db']))->findAll();
 
@@ -100,11 +98,10 @@ class CommentController
     /**
      * Admin get a Comment for update
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function adminGetForUpdateAction(Request $request, Application $app, $id)
+    public function adminGetForUpdateAction(Application $app, $id)
     {
         $comment = (new CommentFinder($app['db']))->findOneById($id);
 
@@ -112,7 +109,7 @@ class CommentController
             return new Response('Comment not found', 404);
         }
 
-        $form = $app['form.factory']->create(new CommentType($comment), $comment);
+        $form = $app['form.factory']->create(new CommentType, $comment);
 
         return $app['twig']->render('admin_comment_update.html', array(
                 'form'     => $form->createView(),
@@ -135,7 +132,7 @@ class CommentController
             return new Response('Comment not found', 404);
         }
 
-        $form = $app['form.factory']->create(new CommentType($comment), $comment);
+        $form = $app['form.factory']->create(new CommentType, $comment);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -154,11 +151,10 @@ class CommentController
     /**
      * Admin delete a Comment
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function adminDeleteAction(Request $request, Application $app, $id)
+    public function adminDeleteAction(Application $app, $id)
     {
         $comment = (new CommentFinder($app['db']))->findOneById($id);
 

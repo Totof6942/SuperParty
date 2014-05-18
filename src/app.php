@@ -28,7 +28,7 @@ $app->register(new TwigServiceProvider(), array(
 ));
 
 $app->register(new TranslationServiceProvider());
-$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+$app['translator'] = $app->share($app->extend('translator', function($translator) {
     $translator->addLoader('yaml', new YamlTranslation());
 
     $translator->addResource('yaml', __DIR__.'/../resources/locales/fr.yml', 'fr');

@@ -19,10 +19,9 @@ class PartyController
     /**
      * Get all Party
      *
-     * @param Request     $request
      * @param Application $app
      */
-    public function indexAction(Request $request, Application $app)
+    public function indexAction(Application $app)
     {
         $parties = (new PartyFinder($app['db']))->findAll();
 
@@ -38,11 +37,10 @@ class PartyController
     /**
      * Get a Party by his id
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function getByIdAction(Request $request, Application $app, $id)
+    public function getByIdAction(Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
 
@@ -64,11 +62,10 @@ class PartyController
     /**
      * Get all Parties for a Location
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $location_id
      */
-    public function getForLocationAction(Request $request, Application $app, $location_id)
+    public function getForLocationAction(Application $app, $location_id)
     {
         if ('json' !== guessBestFormat()) {
             return $app->redirect($app['url_generator']->generate('location_get', array('id' => $location_id)));
@@ -105,7 +102,7 @@ class PartyController
         }
 
         $party = new Party();
-        $form = $app['form.factory']->create(new PartyType($party), $party);
+        $form = $app['form.factory']->create(new PartyType, $party);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -128,10 +125,9 @@ class PartyController
     /**
      * Admin get all Parties
      *
-     * @param Request     $request
      * @param Application $app
      */
-    public function adminIndexAction(Request $request, Application $app)
+    public function adminIndexAction(Application $app)
     {
         $parties = (new PartyFinder($app['db']))->findAll();
 
@@ -141,11 +137,10 @@ class PartyController
     /**
      * Admin get a Party for update
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function adminGetForUpdateAction(Request $request, Application $app, $id)
+    public function adminGetForUpdateAction(Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
 
@@ -153,7 +148,7 @@ class PartyController
             return new Response('Party not found', 404);
         }
 
-        $form = $app['form.factory']->create(new PartyType($party), $party);
+        $form = $app['form.factory']->create(new PartyType, $party);
 
         return $app['twig']->render('admin_party_update.html', array(
                 'form'  => $form->createView(),
@@ -176,7 +171,7 @@ class PartyController
             return new Response('Party not found', 404);
         }
 
-        $form = $app['form.factory']->create(new PartyType($party), $party);
+        $form = $app['form.factory']->create(new PartyType, $party);
         $form->bindRequest($request);
 
         if (!$form->isValid()) {
@@ -195,11 +190,10 @@ class PartyController
     /**
      * Admin delete a Party
      *
-     * @param Request     $request
      * @param Application $app
      * @param int         $id
      */
-    public function adminDeleteAction(Request $request, Application $app, $id)
+    public function adminDeleteAction(Application $app, $id)
     {
         $party = (new PartyFinder($app['db']))->findOneById($id);
 

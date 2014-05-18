@@ -20,7 +20,7 @@ class ConnectionController
             ));
     }
 
-    public function logoutAction(Request $request, Application $app)
+    public function logoutAction(Application $app)
     {
         $app['session']->clear();
 
