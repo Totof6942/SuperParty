@@ -1,7 +1,7 @@
 SuperParty
 ==========
 
-[![Build Status](https://travis-ci.org/Totof6942/SuperParty.svg?branch=master)](https://travis-ci.org/Totof6942/SuperParty)
+[![Build Status](https://travis-ci.org/Totof6942/SuperParty.svg?branch=master)](https://travis-ci.org/Totof6942/SuperParty) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Totof6942/SuperParty/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Totof6942/SuperParty/?branch=master)
 
 **SuperParty** developed by **[Claude Dioudonnat](https://github.com/claudusd)** and **[Christophe Poulette](https://github.com/Totof6942)** for the PHP practicals supervised by [Julien Muetton](https://github.com/themouette) and [William Durand](https://github.com/willdurand).
 
