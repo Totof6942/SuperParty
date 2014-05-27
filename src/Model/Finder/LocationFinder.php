@@ -5,7 +5,6 @@ namespace Model\Finder;
 use Doctrine\DBAL\Connection;
 
 use Model\Entity\Location;
-use Model\Finder\LocationFinder;
 
 class LocationFinder implements FinderInterface
 {

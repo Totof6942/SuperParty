@@ -6,7 +6,6 @@ use Doctrine\DBAL\Connection;
 
 use Model\Entity\Location;
 use Model\Entity\Party;
-use Model\Finder\PartyFinder;
 
 class PartyFinder implements FinderInterface
 {

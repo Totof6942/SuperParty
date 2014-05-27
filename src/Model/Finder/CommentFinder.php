@@ -6,7 +6,6 @@ use Doctrine\DBAL\Connection;
 
 use Model\Entity\Location;
 use Model\Entity\Comment;
-use Model\Finder\CommentFinder;
 
 class CommentFinder implements FinderInterface
 {

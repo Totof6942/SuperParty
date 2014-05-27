@@ -3,7 +3,6 @@
 namespace Controller;
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
 use Http\JsonResponse;
 use Model\Finder\LocationFinder;
