@@ -26,11 +26,6 @@ class Party
     private $message;
 
     /**
-     * @var boolean
-     */
-    private $is_valid;
-
-    /**
      * @var Location
      */
     private $location;
@@ -89,22 +84,6 @@ class Party
     public function getMessage()
     {
         return $this->message;
-    }
-
-    /**
-     * @param boolean $is_valid
-     */
-    public function setIsValid($is_valid)
-    {
-        $this->is_valid = $is_valid;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsValid()
-    {
-        return $this->is_valid;
     }
 
     /**
